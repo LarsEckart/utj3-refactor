@@ -3,6 +3,7 @@ package iloveyouboss;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static iloveyouboss.Weight.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AProfile {
@@ -59,9 +60,9 @@ public class AProfile {
     public void matchAnswersFalseWhenMustMatchCriteriaNotMet() {
         profile.add(answerDoesNotReimburseTuition);
         criteria.add(
-            new Criterion(answerReimbursesTuition, Weight.MustMatch));
+            new Criterion(answerReimbursesTuition, MustMatch));
 
-        boolean matches = profile.matches(criteria);
+        var matches = profile.matches(criteria);
 
         assertFalse(matches);
     }
@@ -70,9 +71,9 @@ public class AProfile {
     public void matchAnswersTrueForAnyDontCareCriteria() {
         profile.add(answerDoesNotReimburseTuition);
         criteria.add(
-            new Criterion(answerReimbursesTuition, Weight.DontCare));
+            new Criterion(answerReimbursesTuition, DontCare));
 
-        boolean matches = profile.matches(criteria);
+        var matches = profile.matches(criteria);
 
         assertTrue(matches);
     }
@@ -81,10 +82,10 @@ public class AProfile {
     public void matchAnswersTrueWhenAnyOfMultipleCriteriaMatch() {
         profile.add(answerThereIsRelocation);
         profile.add(answerDoesNotReimburseTuition);
-        criteria.add(new Criterion(answerThereIsRelocation, Weight.Important));
-        criteria.add(new Criterion(answerReimbursesTuition, Weight.Important));
+        criteria.add(new Criterion(answerThereIsRelocation, Important));
+        criteria.add(new Criterion(answerReimbursesTuition, Important));
 
-        boolean matches = profile.matches(criteria);
+        var matches = profile.matches(criteria);
 
         assertTrue(matches);
     }
@@ -93,10 +94,10 @@ public class AProfile {
     public void matchAnswersFalseWhenNoneOfMultipleCriteriaMatch() {
         profile.add(answerThereIsNoRelocation);
         profile.add(answerDoesNotReimburseTuition);
-        criteria.add(new Criterion(answerThereIsRelocation, Weight.Important));
-        criteria.add(new Criterion(answerReimbursesTuition, Weight.Important));
+        criteria.add(new Criterion(answerThereIsRelocation, Important));
+        criteria.add(new Criterion(answerReimbursesTuition, Important));
 
-        boolean matches = profile.matches(criteria);
+        var matches = profile.matches(criteria);
 
         assertFalse(matches);
     }
@@ -104,7 +105,7 @@ public class AProfile {
     @Test
     public void scoreIsZeroWhenThereAreNoMatches() {
         profile.add(answerThereIsNoRelocation);
-        criteria.add(new Criterion(answerThereIsRelocation, Weight.Important));
+        criteria.add(new Criterion(answerThereIsRelocation, Important));
 
         profile.matches(criteria);
 
@@ -114,11 +115,11 @@ public class AProfile {
     @Test
     public void scoreIsCriterionValueForSingleMatch() {
         profile.add(answerThereIsRelocation);
-        criteria.add(new Criterion(answerThereIsRelocation, Weight.Important));
+        criteria.add(new Criterion(answerThereIsRelocation, Important));
 
         profile.matches(criteria);
 
-        assertEquals(Weight.Important.getValue(), profile.score());
+        assertEquals(Important.getValue(), profile.score());
     }
 
     @Test
@@ -126,13 +127,13 @@ public class AProfile {
         profile.add(answerThereIsRelocation);
         profile.add(answerReimbursesTuition);
         profile.add(answerNoOnsiteDaycare);
-        criteria.add(new Criterion(answerThereIsRelocation, Weight.Important));
-        criteria.add(new Criterion(answerReimbursesTuition, Weight.WouldPrefer));
-        criteria.add(new Criterion(answerHasOnsiteDaycare, Weight.VeryImportant));
+        criteria.add(new Criterion(answerThereIsRelocation, Important));
+        criteria.add(new Criterion(answerReimbursesTuition, WouldPrefer));
+        criteria.add(new Criterion(answerHasOnsiteDaycare, VeryImportant));
 
         profile.matches(criteria);
 
-        int expectedScore = Weight.Important.getValue() + Weight.WouldPrefer.getValue();
+        var expectedScore = Important.getValue() + WouldPrefer.getValue();
         assertEquals(expectedScore, profile.score());
     }
 
