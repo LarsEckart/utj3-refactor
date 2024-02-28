@@ -4,7 +4,8 @@ import java.util.*;
 
 import static java.util.Arrays.asList;
 
-public record Criteria(List<Criterion> criteria) implements Iterable<Criterion> {
+public record Criteria(List<Criterion> criteria)
+    implements Iterable<Criterion> {
     public Criteria(Criterion... criterion) {
         this(asList(criterion));
     }
@@ -14,3 +15,4 @@ public record Criteria(List<Criterion> criteria) implements Iterable<Criterion> 
         return criteria.iterator();
     }
 }
+

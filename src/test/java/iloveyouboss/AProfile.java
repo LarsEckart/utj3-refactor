@@ -1,148 +1,135 @@
 package iloveyouboss;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static iloveyouboss.Weight.*;
 import static iloveyouboss.YesNo.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AProfile {
-    Profile profile;
+    Profile profile = new Profile("Geeks Inc.");
     Criteria criteria;
 
-    Question questionReimbursesTuition;
-    Answer answerReimbursesTuition;
-    Answer answerDoesNotReimburseTuition;
+    Question freeLunch;
+    Answer freeLunchYes;
+    Answer freeLunchNo;
 
-    Question questionIsThereRelocation;
-    Answer answerThereIsRelocation;
-    Answer answerThereIsNoRelocation;
+    Question bonus;
+    Answer bonusYes;
+    Answer bonusNo;
 
-    Question questionOnsiteDaycare;
-    Answer answerNoOnsiteDaycare;
-    Answer answerHasOnsiteDaycare;
+    Question hasGym;
+    Answer hasGymNo;
+    Answer hasGymYes;
 
-    @BeforeEach
-    void createProfile() {
-        profile = new Profile("Bull Hockey, Inc.");
-    }
+    String[] NO_YES = {NO.toString(), YES.toString()};
 
     @BeforeEach
     void createQuestionsAndAnswers() {
-        questionIsThereRelocation =
-            createBooleanQuestion(1, "Relocation package?");
-        answerThereIsRelocation =
-            new Answer(questionIsThereRelocation, YES.toString());
-        answerThereIsNoRelocation =
-            new Answer(questionIsThereRelocation, NO.toString());
+        bonus = new Question("Bonus?", NO_YES, 1);
+        bonusYes = new Answer(bonus, YES);
+        bonusNo = new Answer(bonus, NO);
 
-        questionReimbursesTuition =
-            createBooleanQuestion(1, "Reimburses tuition?");
-        answerReimbursesTuition =
-            new Answer(questionReimbursesTuition, YES.toString());
-        answerDoesNotReimburseTuition =
-            new Answer(questionReimbursesTuition, NO.toString());
+        freeLunch = new Question("Free lunch?", NO_YES, 1);
+        freeLunchYes = new Answer(freeLunch, YES);
+        freeLunchNo = new Answer(freeLunch, NO);
 
-        questionOnsiteDaycare =
-            createBooleanQuestion(1, "Onsite daycare?");
-        answerHasOnsiteDaycare =
-            new Answer(questionOnsiteDaycare, YES.toString());
-        answerNoOnsiteDaycare =
-            new Answer(questionOnsiteDaycare, NO.toString());
+        hasGym = new Question("Gym?", NO_YES, 1);
+        hasGymYes = new Answer(hasGym, YES);
+        hasGymNo = new Answer(hasGym, NO);
     }
 
-    Question createBooleanQuestion(int id, String text) {
-        return new Question(text, new String[] { NO.toString(), YES.toString() }, id);
+    @Nested
+    class DoesNotMatch {
+        @Test
+        void whenAnyRequiredCriteriaNotMet() {
+            profile.add(freeLunchNo, bonusYes);
+            criteria = new Criteria(
+                    new Criterion(freeLunchYes, REQUIRED),
+                    new Criterion(bonusYes, IMPORTANT));
+
+            var matches = profile.matches(criteria);
+
+            assertFalse(matches);
+        }
+
+        @Test
+        void whenNoneOfMultipleCriteriaMatch() {
+            profile.add(bonusNo, freeLunchNo);
+            criteria = new Criteria(
+                new Criterion(bonusYes, IMPORTANT),
+                new Criterion(freeLunchYes, IMPORTANT));
+
+            var matches = profile.matches(criteria);
+
+            assertFalse(matches);
+        }
     }
 
-    @Test
-    void matchAnswersFalseWhenMustMatchCriteriaNotMet() {
-        profile.add(answerDoesNotReimburseTuition);
-        criteria = new Criteria(
-            List.of(new Criterion(answerReimbursesTuition, MustMatch)));
+    @Nested
+    class Matches {
+        @Test
+        void whenCriteriaIrrelevant() {
+            profile.add(freeLunchNo);
+            criteria = new Criteria(
+                new Criterion(freeLunchYes, IRRELEVANT));
 
-        var matches = profile.matches(criteria);
+            var matches = profile.matches(criteria);
 
-        assertFalse(matches);
+            assertTrue(matches);
+        }
+
+        @Test
+        void whenAnyOfMultipleCriteriaMatch() {
+            profile.add(bonusYes, freeLunchNo);
+            criteria = new Criteria(
+                new Criterion(bonusYes, IMPORTANT),
+                new Criterion(freeLunchYes, IMPORTANT));
+
+            var matches = profile.matches(criteria);
+
+            assertTrue(matches);
+        }
     }
 
-    @Test
-    void matchAnswersTrueForAnyDontCareCriteria() {
-        profile.add(answerDoesNotReimburseTuition);
-        criteria = new Criteria(
-            new Criterion(answerReimbursesTuition, DontCare));
+    @Nested
+    class Score {
+        @Test
+        void isZeroWhenThereAreNoMatches() {
+            profile.add(bonusNo);
+            criteria = new Criteria(
+                new Criterion(bonusYes, IMPORTANT));
 
-        var matches = profile.matches(criteria);
+            profile.matches(criteria);
 
-        assertTrue(matches);
+            assertEquals(0, profile.score());
+        }
+
+        @Test
+        void equalsCriterionValueForSingleMatch() {
+            profile.add(bonusYes);
+            criteria = new Criteria(
+                new Criterion(bonusYes, IMPORTANT));
+
+            profile.matches(criteria);
+
+            assertEquals(IMPORTANT.value(), profile.score());
+        }
+
+        @Test
+        void sumsCriterionValuesForMatches() {
+            profile.add(bonusYes, freeLunchYes, hasGymNo);
+            criteria = new Criteria(
+                new Criterion(bonusYes, IMPORTANT),
+                new Criterion(freeLunchYes, NICE_TO_HAVE),
+                new Criterion(hasGymYes, VERY_IMPORTANT));
+
+            profile.matches(criteria);
+
+            assertEquals(
+                IMPORTANT.value() + NICE_TO_HAVE.value(), profile.score());
+        }
     }
-
-    @Test
-    void matchAnswersTrueWhenAnyOfMultipleCriteriaMatch() {
-        profile.add(answerThereIsRelocation);
-        profile.add(answerDoesNotReimburseTuition);
-        criteria = new Criteria(
-            new Criterion(answerThereIsRelocation, Important),
-            new Criterion(answerReimbursesTuition, Important));
-
-        var matches = profile.matches(criteria);
-
-        assertTrue(matches);
-    }
-
-    @Test
-    void matchAnswersFalseWhenNoneOfMultipleCriteriaMatch() {
-        profile.add(answerThereIsNoRelocation);
-        profile.add(answerDoesNotReimburseTuition);
-        criteria = new Criteria(
-            new Criterion(answerThereIsRelocation, Important),
-            new Criterion(answerReimbursesTuition, Important));
-
-        var matches = profile.matches(criteria);
-
-        assertFalse(matches);
-    }
-
-    @Test
-    void scoreIsZeroWhenThereAreNoMatches() {
-        profile.add(answerThereIsNoRelocation);
-        criteria = new Criteria(
-            new Criterion(answerThereIsRelocation, Important));
-
-        profile.matches(criteria);
-
-        assertEquals(0, profile.score());
-    }
-
-    @Test
-    void scoreIsCriterionValueForSingleMatch() {
-        profile.add(answerThereIsRelocation);
-        criteria = new Criteria(
-            new Criterion(answerThereIsRelocation, Important));
-
-        profile.matches(criteria);
-
-        assertEquals(Important.getValue(), profile.score());
-    }
-
-    @Test
-    void scoreAccumulatesCriterionValuesForMatches() {
-        profile.add(answerThereIsRelocation);
-        profile.add(answerReimbursesTuition);
-        profile.add(answerNoOnsiteDaycare);
-        criteria = new Criteria(
-            new Criterion(answerThereIsRelocation, Important),
-            new Criterion(answerReimbursesTuition, WouldPrefer),
-            new Criterion(answerHasOnsiteDaycare, VeryImportant));
-
-        profile.matches(criteria);
-
-        var expectedScore = Important.getValue() + WouldPrefer.getValue();
-        assertEquals(expectedScore, profile.score());
-    }
-
-    // TODO: missing functionality--what if there is no matching profile answer for a criterion?
 }

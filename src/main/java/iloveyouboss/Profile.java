@@ -3,20 +3,21 @@ package iloveyouboss;
 import java.util.HashMap;
 import java.util.Map;
 
-import static iloveyouboss.Weight.DontCare;
-import static iloveyouboss.Weight.MustMatch;
+import static iloveyouboss.Weight.IRRELEVANT;
+import static iloveyouboss.Weight.REQUIRED;
 
 public class Profile {
-    private Map<String,Answer> answers = new HashMap<>();
+    private final Map<String,Answer> answers = new HashMap<>();
+    private final String name;
     private int score;
-    private String name;
 
     public Profile(String name) {
         this.name = name;
     }
 
-    public void add(Answer answer) {
-        answers.put(answer.questionText(), answer);
+    public void add(Answer... newAnswers) {
+        for (var answer: newAnswers)
+            answers.put(answer.questionText(), answer);
     }
 
     public boolean matches(Criteria criteria) {
@@ -28,16 +29,15 @@ public class Profile {
             var answer = answers.get(
                 criterion.answer().questionText());
             var match =
-                criterion.weight() == DontCare ||
+                criterion.weight() == IRRELEVANT ||
                     answer.match(criterion.answer());
-            if (!match && criterion.weight() == MustMatch) {
+            if (!match && criterion.weight() == REQUIRED) {
                 kill = true;
             }
             if (match) {
-                score += criterion.weight().getValue();
+                score += criterion.weight().value();
             }
             anyMatches |= match;
-            // ...
         }
         if (kill)
             return false;
