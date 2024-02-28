@@ -3,6 +3,8 @@ package iloveyouboss;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static iloveyouboss.Weight.*;
 import static iloveyouboss.YesNo.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,11 +28,6 @@ class AProfile {
     @BeforeEach
     void createProfile() {
         profile = new Profile("Bull Hockey, Inc.");
-    }
-
-    @BeforeEach
-    void createCriteria() {
-        criteria = new Criteria();
     }
 
     @BeforeEach
@@ -64,8 +61,8 @@ class AProfile {
     @Test
     void matchAnswersFalseWhenMustMatchCriteriaNotMet() {
         profile.add(answerDoesNotReimburseTuition);
-        criteria.add(
-            new Criterion(answerReimbursesTuition, MustMatch));
+        criteria = new Criteria(
+            List.of(new Criterion(answerReimbursesTuition, MustMatch)));
 
         var matches = profile.matches(criteria);
 
@@ -75,7 +72,7 @@ class AProfile {
     @Test
     void matchAnswersTrueForAnyDontCareCriteria() {
         profile.add(answerDoesNotReimburseTuition);
-        criteria.add(
+        criteria = new Criteria(
             new Criterion(answerReimbursesTuition, DontCare));
 
         var matches = profile.matches(criteria);
@@ -87,8 +84,9 @@ class AProfile {
     void matchAnswersTrueWhenAnyOfMultipleCriteriaMatch() {
         profile.add(answerThereIsRelocation);
         profile.add(answerDoesNotReimburseTuition);
-        criteria.add(new Criterion(answerThereIsRelocation, Important));
-        criteria.add(new Criterion(answerReimbursesTuition, Important));
+        criteria = new Criteria(
+            new Criterion(answerThereIsRelocation, Important),
+            new Criterion(answerReimbursesTuition, Important));
 
         var matches = profile.matches(criteria);
 
@@ -99,8 +97,9 @@ class AProfile {
     void matchAnswersFalseWhenNoneOfMultipleCriteriaMatch() {
         profile.add(answerThereIsNoRelocation);
         profile.add(answerDoesNotReimburseTuition);
-        criteria.add(new Criterion(answerThereIsRelocation, Important));
-        criteria.add(new Criterion(answerReimbursesTuition, Important));
+        criteria = new Criteria(
+            new Criterion(answerThereIsRelocation, Important),
+            new Criterion(answerReimbursesTuition, Important));
 
         var matches = profile.matches(criteria);
 
@@ -110,7 +109,8 @@ class AProfile {
     @Test
     void scoreIsZeroWhenThereAreNoMatches() {
         profile.add(answerThereIsNoRelocation);
-        criteria.add(new Criterion(answerThereIsRelocation, Important));
+        criteria = new Criteria(
+            new Criterion(answerThereIsRelocation, Important));
 
         profile.matches(criteria);
 
@@ -120,7 +120,8 @@ class AProfile {
     @Test
     void scoreIsCriterionValueForSingleMatch() {
         profile.add(answerThereIsRelocation);
-        criteria.add(new Criterion(answerThereIsRelocation, Important));
+        criteria = new Criteria(
+            new Criterion(answerThereIsRelocation, Important));
 
         profile.matches(criteria);
 
@@ -132,9 +133,10 @@ class AProfile {
         profile.add(answerThereIsRelocation);
         profile.add(answerReimbursesTuition);
         profile.add(answerNoOnsiteDaycare);
-        criteria.add(new Criterion(answerThereIsRelocation, Important));
-        criteria.add(new Criterion(answerReimbursesTuition, WouldPrefer));
-        criteria.add(new Criterion(answerHasOnsiteDaycare, VeryImportant));
+        criteria = new Criteria(
+            new Criterion(answerThereIsRelocation, Important),
+            new Criterion(answerReimbursesTuition, WouldPrefer),
+            new Criterion(answerHasOnsiteDaycare, VeryImportant));
 
         profile.matches(criteria);
 

@@ -2,11 +2,11 @@ package iloveyouboss;
 
 import java.util.*;
 
-public class Criteria implements Iterable<Criterion> {
-    private List<Criterion> criteria = new ArrayList<>();
+import static java.util.Arrays.asList;
 
-    public void add(Criterion criterion) {
-        criteria.add(criterion);
+public record Criteria(List<Criterion> criteria) implements Iterable<Criterion> {
+    public Criteria(Criterion... criterion) {
+        this(asList(criterion));
     }
 
     @Override
