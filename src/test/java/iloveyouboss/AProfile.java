@@ -4,60 +4,65 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static iloveyouboss.Weight.*;
+import static iloveyouboss.YesNo.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AProfile {
-    private Profile profile;
-    private Criteria criteria;
+class AProfile {
+    Profile profile;
+    Criteria criteria;
 
-    private Question questionReimbursesTuition;
-    private Answer answerReimbursesTuition;
-    private Answer answerDoesNotReimburseTuition;
+    Question questionReimbursesTuition;
+    Answer answerReimbursesTuition;
+    Answer answerDoesNotReimburseTuition;
 
-    private Question questionIsThereRelocation;
-    private Answer answerThereIsRelocation;
-    private Answer answerThereIsNoRelocation;
+    Question questionIsThereRelocation;
+    Answer answerThereIsRelocation;
+    Answer answerThereIsNoRelocation;
 
-    private Question questionOnsiteDaycare;
-    private Answer answerNoOnsiteDaycare;
-    private Answer answerHasOnsiteDaycare;
+    Question questionOnsiteDaycare;
+    Answer answerNoOnsiteDaycare;
+    Answer answerHasOnsiteDaycare;
 
     @BeforeEach
-    public void createProfile() {
+    void createProfile() {
         profile = new Profile("Bull Hockey, Inc.");
     }
 
     @BeforeEach
-    public void createCriteria() {
+    void createCriteria() {
         criteria = new Criteria();
     }
 
     @BeforeEach
-    public void createQuestionsAndAnswers() {
+    void createQuestionsAndAnswers() {
         questionIsThereRelocation =
-            new BooleanQuestion(1, "Relocation package?");
+            createBooleanQuestion(1, "Relocation package?");
         answerThereIsRelocation =
-            new Answer(questionIsThereRelocation, Bool.TRUE);
+            new Answer(questionIsThereRelocation, YES.toString());
         answerThereIsNoRelocation =
-            new Answer(questionIsThereRelocation, Bool.FALSE);
+            new Answer(questionIsThereRelocation, NO.toString());
 
         questionReimbursesTuition =
-            new BooleanQuestion(1, "Reimburses tuition?");
+            createBooleanQuestion(1, "Reimburses tuition?");
         answerReimbursesTuition =
-            new Answer(questionReimbursesTuition, Bool.TRUE);
+            new Answer(questionReimbursesTuition, YES.toString());
         answerDoesNotReimburseTuition =
-            new Answer(questionReimbursesTuition, Bool.FALSE);
+            new Answer(questionReimbursesTuition, NO.toString());
 
         questionOnsiteDaycare =
-            new BooleanQuestion(1, "Onsite daycare?");
+            createBooleanQuestion(1, "Onsite daycare?");
         answerHasOnsiteDaycare =
-            new Answer(questionOnsiteDaycare, Bool.TRUE);
+            new Answer(questionOnsiteDaycare, YES.toString());
         answerNoOnsiteDaycare =
-            new Answer(questionOnsiteDaycare, Bool.FALSE);
+            new Answer(questionOnsiteDaycare, NO.toString());
+    }
+
+    Question createBooleanQuestion(int id, String text) {
+        return new Question(text, new String[] { NO.toString(), YES.toString() }, id);
     }
 
     @Test
-    public void matchAnswersFalseWhenMustMatchCriteriaNotMet() {
+    void matchAnswersFalseWhenMustMatchCriteriaNotMet() {
         profile.add(answerDoesNotReimburseTuition);
         criteria.add(
             new Criterion(answerReimbursesTuition, MustMatch));
@@ -68,7 +73,7 @@ public class AProfile {
     }
 
     @Test
-    public void matchAnswersTrueForAnyDontCareCriteria() {
+    void matchAnswersTrueForAnyDontCareCriteria() {
         profile.add(answerDoesNotReimburseTuition);
         criteria.add(
             new Criterion(answerReimbursesTuition, DontCare));
@@ -79,7 +84,7 @@ public class AProfile {
     }
 
     @Test
-    public void matchAnswersTrueWhenAnyOfMultipleCriteriaMatch() {
+    void matchAnswersTrueWhenAnyOfMultipleCriteriaMatch() {
         profile.add(answerThereIsRelocation);
         profile.add(answerDoesNotReimburseTuition);
         criteria.add(new Criterion(answerThereIsRelocation, Important));
@@ -91,7 +96,7 @@ public class AProfile {
     }
 
     @Test
-    public void matchAnswersFalseWhenNoneOfMultipleCriteriaMatch() {
+    void matchAnswersFalseWhenNoneOfMultipleCriteriaMatch() {
         profile.add(answerThereIsNoRelocation);
         profile.add(answerDoesNotReimburseTuition);
         criteria.add(new Criterion(answerThereIsRelocation, Important));
@@ -103,7 +108,7 @@ public class AProfile {
     }
 
     @Test
-    public void scoreIsZeroWhenThereAreNoMatches() {
+    void scoreIsZeroWhenThereAreNoMatches() {
         profile.add(answerThereIsNoRelocation);
         criteria.add(new Criterion(answerThereIsRelocation, Important));
 
@@ -113,7 +118,7 @@ public class AProfile {
     }
 
     @Test
-    public void scoreIsCriterionValueForSingleMatch() {
+    void scoreIsCriterionValueForSingleMatch() {
         profile.add(answerThereIsRelocation);
         criteria.add(new Criterion(answerThereIsRelocation, Important));
 
@@ -123,7 +128,7 @@ public class AProfile {
     }
 
     @Test
-    public void scoreAccumulatesCriterionValuesForMatches() {
+    void scoreAccumulatesCriterionValuesForMatches() {
         profile.add(answerThereIsRelocation);
         profile.add(answerReimbursesTuition);
         profile.add(answerNoOnsiteDaycare);

@@ -1,12 +1,13 @@
 package iloveyouboss;
 
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import static iloveyouboss.Weight.DontCare;
+import static iloveyouboss.Weight.MustMatch;
 
 public class Profile {
     private Map<String,Answer> answers = new HashMap<>();
-
     private int score;
     private String name;
 
@@ -14,30 +15,26 @@ public class Profile {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void add(Answer answer) {
-        answers.put(answer.getQuestionText(), answer);
+        answers.put(answer.questionText(), answer);
     }
 
     public boolean matches(Criteria criteria) {
         score = 0;
 
-        boolean kill = false;
-        boolean anyMatches = false;
-        for (Criterion criterion: criteria) {
-            Answer answer = answers.get(
-                criterion.getAnswer().getQuestionText());
-            boolean match =
-                criterion.getWeight() == Weight.DontCare ||
-                    answer.match(criterion.getAnswer());
-            if (!match && criterion.getWeight() == Weight.MustMatch) {
+        var kill = false;
+        var anyMatches = false;
+        for (var criterion: criteria) {
+            var answer = answers.get(
+                criterion.answer().questionText());
+            var match =
+                criterion.weight() == DontCare ||
+                    answer.match(criterion.answer());
+            if (!match && criterion.weight() == MustMatch) {
                 kill = true;
             }
             if (match) {
-                score += criterion.getWeight().getValue();
+                score += criterion.weight().getValue();
             }
             anyMatches |= match;
             // ...
@@ -51,22 +48,8 @@ public class Profile {
         return score;
     }
 
-    public List<Answer> classicFind(Predicate<Answer> pred) {
-        List<Answer> results = new ArrayList<Answer>();
-        for (Answer answer: answers.values())
-            if (pred.test(answer))
-                results.add(answer);
-        return results;
-    }
-
     @Override
     public String toString() {
         return name;
-    }
-
-    public List<Answer> find(Predicate<Answer> pred) {
-        return answers.values().stream()
-            .filter(pred)
-            .collect(Collectors.toList());
     }
 }
