@@ -1,6 +1,5 @@
 package iloveyouboss;
 
-// START:profile
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,25 +20,17 @@ public class Profile {
             answers.put(answer.questionText(), answer);
     }
 
-    // START:loop
     public boolean matches(Criteria criteria) {
-        // END:profile
-        // ...
-        // END:loop
-        // START:profile
         score = 0;
 
         var kill = false;
         var anyMatches = false;
-        // START:loop
+        // START:matches
         for (var criterion: criteria) {
             var answer = answers.get(criterion.answer().questionText());
-            var match = criterion.weight() == IRRELEVANT ||
-                        answer.match(criterion.answer());
-            // END:profile
+            var match = isMatch(criterion, answer);
             // ...
-            // END:loop
-            // START:profile
+            // END:matches
             if (!match && criterion.weight() == REQUIRED) {
                 kill = true;
             }
@@ -47,17 +38,20 @@ public class Profile {
                 score += criterion.weight().value();
             }
             anyMatches |= match;
+            // START:matches
         }
-        // END:profile
-        // ...
-        // END:loop
-        // START:profile
+        // END:matches
         if (kill)
             return false;
         return anyMatches;
-        // START:loop
     }
-    // END:loop
+
+    // START:isMatch
+    private boolean isMatch(Criterion criterion, Answer answer) {
+        return criterion.weight() == IRRELEVANT ||
+               answer.match(criterion.answer());
+    }
+    // END:isMatch
 
     public int score() {
         return score;
@@ -68,4 +62,3 @@ public class Profile {
         return name;
     }
 }
-// END:profile
