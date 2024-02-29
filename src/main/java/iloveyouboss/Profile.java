@@ -47,7 +47,9 @@ public class Profile {
                 score += criterion.weight().value();
             }
             anyMatches |= match;
+            // START:loop
         }
+        // END:loop
         // END:profile
         // ...
         // END:loop
