@@ -1,5 +1,6 @@
 package iloveyouboss;
 
+// START:test
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -133,3 +134,4 @@ class AProfile {
         }
     }
 }
+// END:test
