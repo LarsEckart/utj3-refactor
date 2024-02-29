@@ -128,8 +128,8 @@ class AProfile {
 
             profile.matches(criteria);
 
-            assertEquals(
-                IMPORTANT.value() + NICE_TO_HAVE.value(), profile.score());
+            assertEquals(IMPORTANT.value() + NICE_TO_HAVE.value(),
+                profile.score());
         }
     }
 }
