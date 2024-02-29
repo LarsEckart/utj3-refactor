@@ -34,8 +34,8 @@ public class Profile {
         // START:loop
         for (var criterion: criteria) {
             var answer = answers.get(criterion.answer().questionText());
-            var match =
-                criterion.weight() == IRRELEVANT || answer.match(criterion.answer());
+            var match = criterion.weight() == IRRELEVANT ||
+                        answer.match(criterion.answer());
             // END:profile
             // ...
             // END:loop
