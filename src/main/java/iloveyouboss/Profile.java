@@ -29,12 +29,10 @@ public class Profile {
         var anyMatches = false;
         // START:mouthful
         for (var criterion: criteria) {
-            // START_HIGHLIGHT
-            var answer = answers.get(criterion.questionText());
-            // END_HIGHLIGHT
+            var answer = profileAnswerMatching(criterion);
+            var match = criterion.isMatch(answer);
             // ...
             // END:mouthful
-            var match = criterion.isMatch(answer);
             if (!match && criterion.weight() == REQUIRED) {
                 kill = true;
             }
@@ -48,6 +46,10 @@ public class Profile {
 
         return anyMatches;
         // START:mouthful
+    }
+
+    private Answer profileAnswerMatching(Criterion criterion) {
+        return answers.get(criterion.questionText());
     }
     // END: mouthful
 
