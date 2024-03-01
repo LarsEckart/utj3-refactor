@@ -3,7 +3,6 @@ package iloveyouboss;
 import java.util.HashMap;
 import java.util.Map;
 
-import static iloveyouboss.Weight.IRRELEVANT;
 import static iloveyouboss.Weight.REQUIRED;
 
 public class Profile {
@@ -25,12 +24,12 @@ public class Profile {
 
         var kill = false;
         var anyMatches = false;
-        // START:matches
+        // START:loop
         for (var criterion: criteria) {
             var answer = answers.get(criterion.answer().questionText());
-            var match = isMatch(criterion, answer);
-            // ...
-            // END:matches
+            // START_HIGHLIGHT
+            var match = criterion.isMatch(answer);
+            // END_HIGHLIGHT
             if (!match && criterion.weight() == REQUIRED) {
                 kill = true;
             }
@@ -38,20 +37,12 @@ public class Profile {
                 score += criterion.weight().value();
             }
             anyMatches |= match;
-            // START:matches
         }
-        // END:matches
+        // END:loop
         if (kill)
             return false;
         return anyMatches;
     }
-
-    // START:isMatch
-    private boolean isMatch(Criterion criterion, Answer answer) {
-        return criterion.weight() == IRRELEVANT ||
-               answer.match(criterion.answer());
-    }
-    // END:isMatch
 
     public int score() {
         return score;
