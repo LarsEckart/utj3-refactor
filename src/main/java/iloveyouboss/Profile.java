@@ -26,7 +26,9 @@ public class Profile {
         var anyMatches = false;
         // START:loop
         for (var criterion: criteria) {
+            // START:mouthful
             var answer = answers.get(criterion.answer().questionText());
+            // END:mouthful
             // START_HIGHLIGHT
             var match = criterion.isMatch(answer);
             // END_HIGHLIGHT
