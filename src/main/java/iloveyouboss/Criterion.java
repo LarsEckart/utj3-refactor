@@ -4,10 +4,15 @@ package iloveyouboss;
 import static iloveyouboss.Weight.IRRELEVANT;
 
 public record Criterion(Answer answer, Weight weight) {
-    // START_HIGHLIGHT
+    // ...
+    // END:criterion
     boolean isMatch(Answer answer) {
-    // END_HIGHLIGHT
         return weight() == IRRELEVANT || answer.match(answer());
+    }
+
+    // START:criterion
+    String questionText() {
+        return answer().questionText();
     }
 }
 // END:criterion

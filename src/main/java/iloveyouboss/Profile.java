@@ -29,7 +29,9 @@ public class Profile {
         var anyMatches = false;
         // START:mouthful
         for (var criterion: criteria) {
-            var answer = answers.get(questionText(criterion));
+            // START_HIGHLIGHT
+            var answer = answers.get(criterion.questionText());
+            // END_HIGHLIGHT
             // ...
             // END:mouthful
             var match = criterion.isMatch(answer);
@@ -46,12 +48,6 @@ public class Profile {
 
         return anyMatches;
         // START:mouthful
-    }
-
-    // START_HIGHLIGHT
-    private String questionText(Criterion criterion) {
-        // END_HIGHLIGHT
-        return criterion.answer().questionText();
     }
     // END: mouthful
 
