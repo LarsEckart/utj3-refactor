@@ -30,9 +30,8 @@ public class Profile {
         // START:mouthful
         for (var criterion: criteria) {
             // START_HIGHLIGHT
-            var answer = profileAnswerMatching(criterion);
+            var match = criterion.isMatch(profileAnswerMatching(criterion));
             // END_HIGHLIGHT
-            var match = criterion.isMatch(answer);
             // ...
             // END:mouthful
             if (!match && criterion.weight() == REQUIRED) {
@@ -49,13 +48,11 @@ public class Profile {
         return anyMatches;
         // START:mouthful
     }
+    // END: mouthful
 
-    // START_HIGHLIGHT
     private Answer profileAnswerMatching(Criterion criterion) {
-        // END_HIGHLIGHT
         return answers.get(criterion.questionText());
     }
-    // END: mouthful
 
     public int score() {
         return score;
