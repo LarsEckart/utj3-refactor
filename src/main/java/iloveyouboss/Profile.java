@@ -19,15 +19,16 @@ public class Profile {
             answers.put(answer.questionText(), answer);
     }
 
+    // START:matches
     public boolean matches(Criteria criteria) {
-        var kill = anyRequiredCriteriaNotMet(criteria);
-        if (kill)
+        if (anyRequiredCriteriaNotMet(criteria))
             return false;
 
         calculateScore(criteria);
 
         return anyMatches(criteria);
     }
+    // END:matches
 
     // START:anyRequiredCriteriaNotMet
     private boolean anyRequiredCriteriaNotMet(Criteria criteria) {
