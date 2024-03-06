@@ -19,15 +19,11 @@ public class Profile {
             answers.put(answer.questionText(), answer);
     }
 
-    // START:calculateScore
+    // START:required
     public boolean matches(Criteria criteria) {
-        var kill = false;
-        for (var criterion: criteria) {
-            var match = criterion.isMatch(profileAnswerMatching(criterion));
-            if (!match && criterion.weight() == REQUIRED) {
-                kill = true;
-            }
-        }
+        // START_HIGHLIGHT
+        var kill = anyRequiredCriteriaNotMet(criteria);
+        // END_HIGHLIGHT
         if (kill)
             return false;
 
@@ -35,6 +31,20 @@ public class Profile {
 
         return anyMatches(criteria);
     }
+
+    // START_HIGHLIGHT
+    private boolean anyRequiredCriteriaNotMet(Criteria criteria) {
+        var kill = false;
+        for (var criterion: criteria) {
+            var match = criterion.isMatch(profileAnswerMatching(criterion));
+            if (!match && criterion.weight() == REQUIRED) {
+                kill = true;
+            }
+        }
+        return kill;
+    }
+    // END_HIGHLIGHT
+    // END:required
 
     private void calculateScore(Criteria criteria) {
         score = 0;
@@ -45,7 +55,6 @@ public class Profile {
             }
         }
     }
-    // END:calculateScore
 
     private boolean anyMatches(Criteria criteria) {
         var anyMatches = false;
