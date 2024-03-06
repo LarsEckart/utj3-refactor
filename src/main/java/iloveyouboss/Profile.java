@@ -43,6 +43,7 @@ public class Profile {
         // END_HIGHLIGHT
     }
 
+    // START_HIGHLIGHT
     private boolean anyMatches(Criteria criteria) {
         var anyMatches = false;
         for (var criterion: criteria) {
@@ -51,6 +52,7 @@ public class Profile {
         }
         return anyMatches;
     }
+    // END_HIGHLIGHT
     // END:anyMatches
 
     private Answer profileAnswerMatching(Criterion criterion) {
