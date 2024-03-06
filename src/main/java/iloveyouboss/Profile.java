@@ -19,26 +19,33 @@ public class Profile {
             answers.put(answer.questionText(), answer);
     }
 
-    // START:anyMatches
+    // START:calculateScore
     public boolean matches(Criteria criteria) {
-        score = 0;
-
         var kill = false;
         for (var criterion: criteria) {
             var match = criterion.isMatch(profileAnswerMatching(criterion));
             if (!match && criterion.weight() == REQUIRED) {
                 kill = true;
             }
-            if (match) {
-                score += criterion.weight().value();
-            }
         }
         if (kill)
             return false;
 
+        calculateScore(criteria);
+
         return anyMatches(criteria);
     }
-    // END:anyMatches
+
+    private void calculateScore(Criteria criteria) {
+        score = 0;
+        for (var criterion: criteria) {
+            var match = criterion.isMatch(profileAnswerMatching(criterion));
+            if (match) {
+                score += criterion.weight().value();
+            }
+        }
+    }
+    // END:calculateScore
 
     private boolean anyMatches(Criteria criteria) {
         var anyMatches = false;
