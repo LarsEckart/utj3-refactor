@@ -24,7 +24,6 @@ public class Profile {
         score = 0;
 
         var kill = false;
-        var anyMatches = false;
         for (var criterion: criteria) {
             var match = criterion.isMatch(profileAnswerMatching(criterion));
             if (!match && criterion.weight() == REQUIRED) {
@@ -33,15 +32,13 @@ public class Profile {
             if (match) {
                 score += criterion.weight().value();
             }
-            anyMatches |= match;
         }
         if (kill)
             return false;
 
-        // START_HIGHLIGHT
         return anyMatches(criteria);
-        // END_HIGHLIGHT
     }
+    // END:anyMatches
 
     private boolean anyMatches(Criteria criteria) {
         var anyMatches = false;
@@ -51,7 +48,6 @@ public class Profile {
         }
         return anyMatches;
     }
-    // END:anyMatches
 
     private Answer profileAnswerMatching(Criterion criterion) {
         return answers.get(criterion.questionText());
