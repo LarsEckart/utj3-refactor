@@ -42,7 +42,10 @@ public class Profile {
                 score += criterion.weight().value();
             }
             anyMatches |= match;
+            // START:mouthful
         }
+        // ...
+        // END:mouthful
         if (kill)
             return false;
 
