@@ -19,6 +19,7 @@ public class Profile {
             answers.put(answer.questionText(), answer);
     }
 
+    // START:anyMatches
     public boolean matches(Criteria criteria) {
         score = 0;
 
@@ -37,8 +38,20 @@ public class Profile {
         if (kill)
             return false;
 
+        // START_HIGHLIGHT
+        return anyMatches(criteria);
+        // END_HIGHLIGHT
+    }
+
+    private boolean anyMatches(Criteria criteria) {
+        var anyMatches = false;
+        for (var criterion: criteria) {
+            var match = criterion.isMatch(profileAnswerMatching(criterion));
+            anyMatches |= match;
+        }
         return anyMatches;
     }
+    // END:anyMatches
 
     private Answer profileAnswerMatching(Criterion criterion) {
         return answers.get(criterion.questionText());
