@@ -19,6 +19,7 @@ public class Profile {
             answers.put(answer.questionText(), answer);
     }
 
+    // START:matches
     public boolean matches(Criteria criteria) {
         score = 0;
 
@@ -45,6 +46,7 @@ public class Profile {
         return anyMatches;
         // END_HIGHLIGHT
     }
+    // END:matches
 
     private Answer profileAnswerMatching(Criterion criterion) {
         return answers.get(criterion.questionText());
