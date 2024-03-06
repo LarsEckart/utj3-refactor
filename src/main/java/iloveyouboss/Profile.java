@@ -23,21 +23,27 @@ public class Profile {
         score = 0;
 
         var kill = false;
+        // START_HIGHLIGHT
         var anyMatches = false;
         for (var criterion: criteria) {
             var match = criterion.isMatch(profileAnswerMatching(criterion));
+            // END_HIGHLIGHT
             if (!match && criterion.weight() == REQUIRED) {
                 kill = true;
             }
             if (match) {
                 score += criterion.weight().value();
             }
+            // START_HIGHLIGHT
             anyMatches |= match;
+            // END_HIGHLIGHT
         }
         if (kill)
             return false;
 
+        // START_HIGHLIGHT
         return anyMatches;
+        // END_HIGHLIGHT
     }
 
     private Answer profileAnswerMatching(Criterion criterion) {
