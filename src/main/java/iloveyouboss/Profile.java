@@ -31,11 +31,14 @@ public class Profile {
         if (kill)
             return false;
 
+        // START_HIGHLIGHT
         calculateScore(criteria);
+        // END_HIGHLIGHT
 
         return anyMatches(criteria);
     }
 
+    // START_HIGHLIGHT
     private void calculateScore(Criteria criteria) {
         score = 0;
         for (var criterion: criteria) {
@@ -45,6 +48,7 @@ public class Profile {
             }
         }
     }
+    // END_HIGHLIGHT
     // END:calculateScore
 
     private boolean anyMatches(Criteria criteria) {
