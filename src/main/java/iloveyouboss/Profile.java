@@ -19,21 +19,13 @@ public class Profile {
             answers.put(answer.questionText(), answer);
     }
 
-    // START:mouthful
     public boolean matches(Criteria criteria) {
-        // ...
-        // END:mouthful
         score = 0;
 
         var kill = false;
         var anyMatches = false;
-        // START:mouthful
         for (var criterion: criteria) {
-            // START_HIGHLIGHT
             var match = criterion.isMatch(profileAnswerMatching(criterion));
-            // END_HIGHLIGHT
-            // ...
-            // END:mouthful
             if (!match && criterion.weight() == REQUIRED) {
                 kill = true;
             }
@@ -41,17 +33,12 @@ public class Profile {
                 score += criterion.weight().value();
             }
             anyMatches |= match;
-            // START:mouthful
         }
-        // ...
-        // END:mouthful
         if (kill)
             return false;
 
         return anyMatches;
-        // START:mouthful
     }
-    // END: mouthful
 
     private Answer profileAnswerMatching(Criterion criterion) {
         return answers.get(criterion.questionText());
