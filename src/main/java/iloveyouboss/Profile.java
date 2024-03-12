@@ -41,16 +41,6 @@ public class Profile {
     }
     // END:anyRequiredCriteriaNotMet
 
-    // START:calculateScore
-    private void calculateScore(Criteria criteria) {
-        score = criteria.stream()
-            .filter(criterion ->
-                criterion.isMatch(profileAnswerMatching(criterion)))
-            .mapToInt(criterion -> criterion.weight().value())
-            .sum();
-    }
-    // END:calculateScore
-
     // START:anyMatches
     private boolean anyMatches(Criteria criteria) {
         return criteria.stream()
@@ -59,6 +49,7 @@ public class Profile {
     }
     // END:anyMatches
 
+    // TODO duplicated in MatchSet
     private Answer profileAnswerMatching(Criterion criterion) {
         return answers.get(criterion.questionText());
     }
