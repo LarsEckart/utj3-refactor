@@ -24,7 +24,9 @@ public class Profile {
         if (anyRequiredCriteriaNotMet(criteria))
             return false;
 
+        // START_HIGHLIGHT
         score = new MatchSet(criteria, answers).score();
+        // END_HIGHLIGHT
 
         return anyMatches(criteria);
     }
