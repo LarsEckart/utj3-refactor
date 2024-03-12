@@ -3,8 +3,6 @@ package iloveyouboss;
 import java.util.HashMap;
 import java.util.Map;
 
-import static iloveyouboss.Weight.REQUIRED;
-
 public class Profile {
     private final Map<String,Answer> answers = new HashMap<>();
     private final String name;
@@ -23,37 +21,9 @@ public class Profile {
     public boolean matches(Criteria criteria) {
         score = new MatchSet(criteria, answers).score();
 
-        return isMatchFor(criteria);
-    }
-
-    private boolean isMatchFor(Criteria criteria) {
-        if (anyRequiredCriteriaNotMet(criteria))
-            return false;
-        return anyMatches(criteria);
+        return new MatchSet(criteria, answers).isMatchFor(criteria);
     }
     // END:matches
-
-    // START:anyRequiredCriteriaNotMet
-    private boolean anyRequiredCriteriaNotMet(Criteria criteria) {
-        return criteria.stream()
-            .filter(criterion ->
-                !criterion.isMatch(profileAnswerMatching(criterion)))
-            .anyMatch(criterion -> criterion.weight() == REQUIRED);
-    }
-    // END:anyRequiredCriteriaNotMet
-
-    // START:anyMatches
-    private boolean anyMatches(Criteria criteria) {
-        return criteria.stream()
-            .anyMatch(criterion ->
-                criterion.isMatch(profileAnswerMatching(criterion)));
-    }
-    // END:anyMatches
-
-    // TODO duplicated in MatchSet
-    private Answer profileAnswerMatching(Criterion criterion) {
-        return answers.get(criterion.questionText());
-    }
 
     public int score() {
         return score;
