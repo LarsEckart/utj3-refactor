@@ -1,10 +1,12 @@
 package iloveyouboss;
 
-// START:class
 import java.util.Map;
 import static iloveyouboss.Weight.REQUIRED;
 
+// START:class
 public class MatchSet {
+    // ...
+    // END:class
     private final Map<String, Answer> answers;
     private int score;
 
@@ -21,6 +23,7 @@ public class MatchSet {
             .sum();
     }
 
+    // START:class
     // START_HIGHLIGHT
     public boolean isMatchFor(Criteria criteria) {
         // END_HIGHLIGHT
@@ -49,9 +52,12 @@ public class MatchSet {
     Answer profileAnswerMatching(Criterion criterion) {
         return answers.get(criterion.questionText());
     }
+    // ...
+    // END:class
 
     public int score() {
         return score;
     }
+    // START:class
 }
 // END:class
