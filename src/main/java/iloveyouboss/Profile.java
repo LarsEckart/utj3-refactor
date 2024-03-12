@@ -24,7 +24,7 @@ public class Profile {
         if (anyRequiredCriteriaNotMet(criteria))
             return false;
 
-        calculateScore(criteria);
+        score = new MatchSet(criteria, answers).score();
 
         return anyMatches(criteria);
     }

@@ -4,13 +4,12 @@ package iloveyouboss;
 import java.util.Map;
 
 public class MatchSet {
-    private final Criteria criteria;
     private final Map<String, Answer> answers;
     private int score;
 
     public MatchSet(Criteria criteria, Map<String, Answer> answers) {
-        this.criteria = criteria;
         this.answers = answers;
+        calculateScore(criteria);
     }
 
     private void calculateScore(Criteria criteria) {
@@ -25,7 +24,7 @@ public class MatchSet {
         return answers.get(criterion.questionText());
     }
 
-    private int score() {
+    public int score() {
         return score;
     }
 }
