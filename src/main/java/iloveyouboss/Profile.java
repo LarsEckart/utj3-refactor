@@ -23,6 +23,10 @@ public class Profile {
     public boolean matches(Criteria criteria) {
         score = new MatchSet(criteria, answers).score();
 
+        return isMatchFor(criteria);
+    }
+
+    private boolean isMatchFor(Criteria criteria) {
         if (anyRequiredCriteriaNotMet(criteria))
             return false;
         return anyMatches(criteria);
