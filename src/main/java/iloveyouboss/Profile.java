@@ -1,5 +1,6 @@
 package iloveyouboss;
 
+// START:class
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,3 +35,4 @@ public class Profile {
         return name;
     }
 }
+// END:class
