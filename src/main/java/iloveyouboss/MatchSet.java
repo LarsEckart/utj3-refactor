@@ -14,7 +14,14 @@ public class MatchSet {
 
     // START:matches
     public boolean matches() {
-        return !anyRequiredCriteriaNotMet() && anyMatches();
+        return allRequiredCriteriaMet() && anyMatches();
+    }
+
+    private boolean allRequiredCriteriaMet() {
+        return criteria.stream()
+            .filter(criterion -> criterion.weight() == REQUIRED)
+            .allMatch(criterion ->
+                criterion.isMatch(profileAnswerMatching(criterion)));
     }
     // END:matches
 
@@ -22,13 +29,6 @@ public class MatchSet {
         return criteria.stream()
             .anyMatch(criterion ->
                 criterion.isMatch(profileAnswerMatching(criterion)));
-    }
-
-    private boolean anyRequiredCriteriaNotMet() {
-        return criteria.stream()
-            .filter(criterion ->
-                !criterion.isMatch(profileAnswerMatching(criterion)))
-            .anyMatch(criterion -> criterion.weight() == REQUIRED);
     }
 
     private Answer profileAnswerMatching(Criterion criterion) {
