@@ -29,6 +29,7 @@ public class MatchSet {
             .sum();
     }
 
+    // START:matches
     public boolean matches() {
         // START_HIGHLIGHT
         if (anyRequiredCriteriaNotMet())
@@ -38,6 +39,7 @@ public class MatchSet {
         return anyMatches();
         // END_HIGHLIGHT
     }
+    // END:matches
 
     // START_HIGHLIGHT
     private boolean anyMatches() {
