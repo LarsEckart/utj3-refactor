@@ -25,7 +25,7 @@ public class Profile {
             return false;
 
         // START_HIGHLIGHT
-        score = new MatchSet(criteria, answers).score();
+        score = new Matcher(criteria, answers).score();
         // END_HIGHLIGHT
 
         return anyMatches(criteria);
@@ -49,7 +49,7 @@ public class Profile {
     }
     // END:anyMatches
 
-    // TODO duplicated in MatchSet
+    // TODO duplicated in Matcher
     private Answer profileAnswerMatching(Criterion criterion) {
         return answers.get(criterion.questionText());
     }
