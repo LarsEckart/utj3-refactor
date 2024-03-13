@@ -3,11 +3,11 @@ package iloveyouboss;
 // START:class
 import java.util.Map;
 
-public class MatchSet {
+public class Matcher {
     private final Map<String, Answer> answers;
     private int score;
 
-    public MatchSet(Criteria criteria, Map<String, Answer> answers) {
+    public Matcher(Criteria criteria, Map<String, Answer> answers) {
         this.answers = answers;
         calculateScore(criteria);
     }
