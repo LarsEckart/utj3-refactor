@@ -14,9 +14,7 @@ public class MatchSet {
 
     // START:matches
     public boolean matches() {
-        if (anyRequiredCriteriaNotMet())
-            return false;
-        return anyMatches();
+        return !anyRequiredCriteriaNotMet() && anyMatches();
     }
     // END:matches
 
