@@ -23,7 +23,7 @@ public class Profile {
         var matchSet = new MatchSet(criteria, answers);
         score = matchSet.score();
         // START_HIGHLIGHT
-        return matchSet.isMatchFor();
+        return matchSet.matches();
         // END_HIGHLIGHT
     }
     // END:matches

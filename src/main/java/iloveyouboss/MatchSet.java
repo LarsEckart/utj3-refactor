@@ -29,7 +29,7 @@ public class MatchSet {
             .sum();
     }
 
-    public boolean isMatchFor() {
+    public boolean matches() {
         // START_HIGHLIGHT
         if (anyRequiredCriteriaNotMet())
             // END_HIGHLIGHT
