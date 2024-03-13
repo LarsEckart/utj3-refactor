@@ -5,23 +5,17 @@ import static iloveyouboss.Weight.REQUIRED;
 
 // START:class
 public class MatchSet {
-    // START_HIGHLIGHT
     private final Criteria criteria;
-    // END_HIGHLIGHT
     private final Map<String, Answer> answers;
     private int score;
 
     public MatchSet(Criteria criteria, Map<String, Answer> answers) {
         this.criteria = criteria;
-        // START_HIGHLIGHT
         this.answers = answers;
         calculateScore();
-        // END_HIGHLIGHT
     }
 
-    // START_HIGHLIGHT
     private void calculateScore() {
-        // END_HIGHLIGHT
         score = criteria.stream()
             .filter(criterion ->
                 criterion.isMatch(profileAnswerMatching(criterion)))
@@ -30,26 +24,18 @@ public class MatchSet {
     }
 
     public boolean isMatchFor() {
-        // START_HIGHLIGHT
         if (anyRequiredCriteriaNotMet())
-            // END_HIGHLIGHT
             return false;
-        // START_HIGHLIGHT
         return anyMatches();
-        // END_HIGHLIGHT
     }
 
-    // START_HIGHLIGHT
     private boolean anyMatches() {
-        // END_HIGHLIGHT
         return criteria.stream()
             .anyMatch(criterion ->
                 criterion.isMatch(profileAnswerMatching(criterion)));
     }
 
-    // START_HIGHLIGHT
     private boolean anyRequiredCriteriaNotMet() {
-        // END_HIGHLIGHT
         return criteria.stream()
             .filter(criterion ->
                 !criterion.isMatch(profileAnswerMatching(criterion)))
