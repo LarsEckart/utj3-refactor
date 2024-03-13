@@ -5,17 +5,23 @@ import static iloveyouboss.Weight.REQUIRED;
 
 // START:class
 public class MatchSet {
-    // ...
-    // END:class
+    // START_HIGHLIGHT
+    private final Criteria criteria;
+    // END_HIGHLIGHT
     private final Map<String, Answer> answers;
     private int score;
 
     public MatchSet(Criteria criteria, Map<String, Answer> answers) {
+        this.criteria = criteria;
+        // START_HIGHLIGHT
         this.answers = answers;
-        calculateScore(criteria);
+        calculateScore();
+        // END_HIGHLIGHT
     }
 
-    private void calculateScore(Criteria criteria) {
+    // START_HIGHLIGHT
+    private void calculateScore() {
+        // END_HIGHLIGHT
         score = criteria.stream()
             .filter(criterion ->
                 criterion.isMatch(profileAnswerMatching(criterion)))
@@ -23,17 +29,18 @@ public class MatchSet {
             .sum();
     }
 
-    // START:class
-    // START_HIGHLIGHT
-    public boolean isMatchFor(Criteria criteria) {
-        // END_HIGHLIGHT
-        if (anyRequiredCriteriaNotMet(criteria))
+    public boolean isMatchFor() {
+        // START_HIGHLIGHT
+        if (anyRequiredCriteriaNotMet())
+            // END_HIGHLIGHT
             return false;
-        return anyMatches(criteria);
+        // START_HIGHLIGHT
+        return anyMatches();
+        // END_HIGHLIGHT
     }
 
     // START_HIGHLIGHT
-    private boolean anyMatches(Criteria criteria) {
+    private boolean anyMatches() {
         // END_HIGHLIGHT
         return criteria.stream()
             .anyMatch(criterion ->
@@ -41,7 +48,7 @@ public class MatchSet {
     }
 
     // START_HIGHLIGHT
-    private boolean anyRequiredCriteriaNotMet(Criteria criteria) {
+    private boolean anyRequiredCriteriaNotMet() {
         // END_HIGHLIGHT
         return criteria.stream()
             .filter(criterion ->
@@ -49,15 +56,12 @@ public class MatchSet {
             .anyMatch(criterion -> criterion.weight() == REQUIRED);
     }
 
-    Answer profileAnswerMatching(Criterion criterion) {
+    private Answer profileAnswerMatching(Criterion criterion) {
         return answers.get(criterion.questionText());
     }
-    // ...
-    // END:class
 
     public int score() {
         return score;
     }
-    // START:class
 }
 // END:class

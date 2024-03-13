@@ -22,7 +22,9 @@ public class Profile {
     public boolean matches(Criteria criteria) {
         var matchSet = new MatchSet(criteria, answers);
         score = matchSet.score();
-        return matchSet.isMatchFor(criteria);
+        // START_HIGHLIGHT
+        return matchSet.isMatchFor();
+        // END_HIGHLIGHT
     }
     // END:matches
 
