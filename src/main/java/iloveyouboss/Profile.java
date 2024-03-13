@@ -19,9 +19,9 @@ public class Profile {
 
     // START:matches
     public boolean matches(Criteria criteria) {
-        score = new MatchSet(criteria, answers).score();
-
-        return new MatchSet(criteria, answers).isMatchFor(criteria);
+        var matchSet = new MatchSet(criteria, answers);
+        score = matchSet.score();
+        return matchSet.isMatchFor(criteria);
     }
     // END:matches
 
