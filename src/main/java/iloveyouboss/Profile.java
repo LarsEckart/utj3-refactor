@@ -21,7 +21,7 @@ public class Profile {
 
     // START:matches
     public boolean matches(Criteria criteria) {
-        score = new MatchSet(criteria, answers).score();
+        score = new Matcher(criteria, answers).score();
 
         return isMatchFor(criteria);
     }
@@ -50,7 +50,7 @@ public class Profile {
     }
     // END:anyMatches
 
-    // TODO duplicated in MatchSet
+    // TODO duplicated in Matcher
     private Answer profileAnswerMatching(Criterion criterion) {
         return answers.get(criterion.questionText());
     }
