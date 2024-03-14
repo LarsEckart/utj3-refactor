@@ -4,14 +4,14 @@ import java.util.Map;
 import static iloveyouboss.Weight.REQUIRED;
 
 // START:class
-public class MatchSet {
+public class Matcher {
     // START_HIGHLIGHT
     private final Criteria criteria;
     // END_HIGHLIGHT
     private final Map<String, Answer> answers;
     private int score;
 
-    public MatchSet(Criteria criteria, Map<String, Answer> answers) {
+    public Matcher(Criteria criteria, Map<String, Answer> answers) {
         this.criteria = criteria;
         // START_HIGHLIGHT
         this.answers = answers;
