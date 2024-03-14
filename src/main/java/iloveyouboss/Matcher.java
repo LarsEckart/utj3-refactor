@@ -14,14 +14,18 @@ public class Matcher {
 
     // START:matches
     public boolean matches() {
+        // START_HIGHLIGHT
         return allRequiredCriteriaMet() && anyMatches();
+        // END_HIGHLIGHT
     }
 
     private boolean allRequiredCriteriaMet() {
         return criteria.stream()
+            // START_HIGHLIGHT
             .filter(criterion -> criterion.weight() == REQUIRED)
             .allMatch(criterion ->
                 criterion.isMatch(profileAnswerMatching(criterion)));
+        // END_HIGHLIGHT
     }
     // END:matches
 
