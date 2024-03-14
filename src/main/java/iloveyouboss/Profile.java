@@ -20,7 +20,7 @@ public class Profile {
 
     // START:matches
     public boolean matches(Criteria criteria) {
-        var matchSet = new MatchSet(criteria, answers);
+        var matchSet = new Matcher(criteria, answers);
         score = matchSet.score();
         return matchSet.isMatchFor(criteria);
     }
