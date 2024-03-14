@@ -3,11 +3,11 @@ package iloveyouboss;
 import java.util.Map;
 import static iloveyouboss.Weight.REQUIRED;
 
-public class MatchSet {
+public class Matcher {
     private final Criteria criteria;
     private final Map<String, Answer> answers;
 
-    public MatchSet(Criteria criteria, Map<String, Answer> answers) {
+    public Matcher(Criteria criteria, Map<String, Answer> answers) {
         this.criteria = criteria;
         this.answers = answers;
     }
