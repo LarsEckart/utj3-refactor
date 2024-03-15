@@ -44,17 +44,23 @@ class AProfile {
 
     @Nested
     class DoesNotMatch {
+        // START:test
         @Test
         void whenAnyRequiredCriteriaNotMet() {
-            profile.add(freeLunchNo, bonusYes);
+            // START_HIGHLIGHT
+            profile.add(freeLunchNo, bonusYes); // save these args
+            // END_HIGHLIGHT
             criteria = new Criteria(
                     new Criterion(freeLunchYes, REQUIRED),
                     new Criterion(bonusYes, IMPORTANT));
 
-            var matches = profile.matches(criteria);
+            // START_HIGHLIGHT
+            var matches = profile.matches(criteria); // remove criteria arg
+            // END_HIGHLIGHT
 
             assertFalse(matches);
         }
+        // END:test
 
         @Test
         void whenNoneOfMultipleCriteriaMatch() {
