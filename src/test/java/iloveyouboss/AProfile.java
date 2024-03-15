@@ -1,6 +1,5 @@
 package iloveyouboss;
 
-// START:test
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -95,6 +94,7 @@ class AProfile {
         }
     }
 
+    // START:score
     @Nested
     class Score {
         @Test
@@ -103,9 +103,13 @@ class AProfile {
             criteria = new Criteria(
                 new Criterion(bonusYes, IMPORTANT));
 
-            profile.matches(criteria);
+            // START_HIGHLIGHT
+            var score = profile.score(criteria);
+            // END_HIGHLIGHT
 
-            assertEquals(0, profile.score());
+            // START_HIGHLIGHT
+            assertEquals(0, score);
+            // END_HIGHLIGHT
         }
 
         @Test
@@ -114,9 +118,13 @@ class AProfile {
             criteria = new Criteria(
                 new Criterion(bonusYes, IMPORTANT));
 
-            profile.matches(criteria);
+            // START_HIGHLIGHT
+            var score = profile.score(criteria);
+            // END_HIGHLIGHT
 
-            assertEquals(IMPORTANT.value(), profile.score());
+            // START_HIGHLIGHT
+            assertEquals(IMPORTANT.value(), score);
+            // END_HIGHLIGHT
         }
 
         @Test
@@ -127,11 +135,15 @@ class AProfile {
                 new Criterion(freeLunchYes, NICE_TO_HAVE),
                 new Criterion(hasGymYes, VERY_IMPORTANT));
 
-            profile.matches(criteria);
+            // START_HIGHLIGHT
+            var score = profile.score(criteria);
+            // END_HIGHLIGHT
 
+            // START_HIGHLIGHT
             assertEquals(IMPORTANT.value() + NICE_TO_HAVE.value(),
-                profile.score());
+                score);
+            // END_HIGHLIGHT
         }
     }
+    // END:score
 }
-// END:test

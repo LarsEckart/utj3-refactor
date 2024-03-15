@@ -1,13 +1,11 @@
 package iloveyouboss;
 
-// START:class
 import java.util.HashMap;
 import java.util.Map;
 
 public class Profile {
     private final Map<String,Answer> answers = new HashMap<>();
     private final String name;
-    private int score;
 
     public Profile(String name) {
         this.name = name;
@@ -20,15 +18,13 @@ public class Profile {
 
     // START:matches
     public boolean matches(Criteria criteria) {
-        var matchSet = new Matcher(criteria, answers);
-        score = matchSet.score();
-        return matchSet.matches();
+        return new Matcher(criteria, answers).matches();
+    }
+
+    public int score(Criteria criteria) {
+        return new Matcher(criteria, answers).score();
     }
     // END:matches
-
-    public int score() {
-        return score;
-    }
 
     @Override
     public String toString() {
