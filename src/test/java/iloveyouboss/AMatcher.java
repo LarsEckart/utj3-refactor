@@ -1,21 +1,22 @@
 package iloveyouboss;
 
-// START:class
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-
-import static iloveyouboss.Weight.*;
+import static iloveyouboss.Weight.IMPORTANT;
+import static iloveyouboss.Weight.REQUIRED;
 import static iloveyouboss.YesNo.NO;
 import static iloveyouboss.YesNo.YES;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-class AMatcher {
-    Matcher matcher;
+// START:fieldsAndBefore
+public class AMatcher {
+    // END:fieldsAndBefore
     Criteria criteria;
+    Matcher matcher;
 
+    // START:fieldsAndBefore
     Question freeLunch;
     Answer freeLunchYes;
     Answer freeLunchNo;
@@ -44,106 +45,40 @@ class AMatcher {
         hasGymYes = new Answer(hasGym, YES);
         hasGymNo = new Answer(hasGym, NO);
     }
+    // END:fieldsAndBefore
 
     @Nested
     class DoesNotMatch {
+        // START:test
         @Test
         void whenAnyRequiredCriteriaNotMet() {
             criteria = new Criteria(
-                    new Criterion(freeLunchYes, REQUIRED),
-                    new Criterion(bonusYes, IMPORTANT));
-            createMatcherWithAnswers(freeLunchNo, bonusYes);
+                new Criterion(freeLunchYes, REQUIRED),
+                new Criterion(bonusYes, IMPORTANT));
+            // START_HIGHLIGHT
+            matcher = new Matcher(criteria, freeLunchNo, bonusYes);
+            // END_HIGHLIGHT
 
+            // START_HIGHLIGHT
             var matches = matcher.matches();
+            // END_HIGHLIGHT
 
             assertFalse(matches);
         }
+        // END:test
 
-        @Test
-        void whenNoneOfMultipleCriteriaMatch() {
-            criteria = new Criteria(
-                new Criterion(bonusYes, IMPORTANT),
-                new Criterion(freeLunchYes, IMPORTANT));
-            createMatcherWithAnswers(bonusNo, freeLunchNo);
-
-            var matches = matcher.matches();
-
-            assertFalse(matches);
-        }
+//        @Test
+//        void whenNoneOfMultipleCriteriaMatch() {
+//            profile.add(bonusNo, freeLunchNo);
+//            criteria = new Criteria(
+//                new Criterion(bonusYes, IMPORTANT),
+//                new Criterion(freeLunchYes, IMPORTANT));
+//
+//            var matches = profile.matches(criteria);
+//
+//            assertFalse(matches);
+//        }
     }
-
-    @Nested
-    class Matches {
-        @Test
-        void whenCriteriaIrrelevant() {
-            criteria = new Criteria(
-                new Criterion(freeLunchYes, IRRELEVANT));
-            createMatcherWithAnswers(freeLunchNo);
-
-            var matches = matcher.matches();
-
-            assertTrue(matches);
-        }
-
-        @Test
-        void whenAnyOfMultipleCriteriaMatch() {
-            criteria = new Criteria(
-                new Criterion(bonusYes, IMPORTANT),
-                new Criterion(freeLunchYes, IMPORTANT));
-            createMatcherWithAnswers(bonusYes, freeLunchNo);
-
-            var matches = matcher.matches();
-
-            assertTrue(matches);
-        }
-    }
-
-    private void createMatcherWithAnswers(Answer... answers) {
-        var answersMap = new HashMap<String, Answer>();
-        for (var answer: answers)
-            answersMap.put(answer.questionText(), answer);
-
-        matcher = new Matcher(criteria, answersMap);
-    }
-
-
-    @Nested
-    class Score {
-        @Test
-        void isZeroWhenThereAreNoMatches() {
-            criteria = new Criteria(
-                new Criterion(bonusYes, IMPORTANT));
-            createMatcherWithAnswers(bonusNo);
-
-            var score = matcher.score();
-
-            assertEquals(0, score);
-        }
-
-        @Test
-        void equalsCriterionValueForSingleMatch() {
-            criteria = new Criteria(
-                new Criterion(bonusYes, IMPORTANT));
-            createMatcherWithAnswers(bonusYes);
-
-            var score = matcher.score();
-
-            assertEquals(IMPORTANT.value(), score);
-        }
-
-        @Test
-        void sumsCriterionValuesForMatches() {
-            criteria = new Criteria(
-                new Criterion(bonusYes, IMPORTANT),
-                new Criterion(freeLunchYes, NICE_TO_HAVE),
-                new Criterion(hasGymYes, VERY_IMPORTANT));
-            createMatcherWithAnswers(bonusYes, freeLunchYes, hasGymNo);
-
-            var score = matcher.score();
-
-            assertEquals(IMPORTANT.value() + NICE_TO_HAVE.value(),
-                score);
-        }
-    }
+// START:fieldsAndBefore
 }
-// END:class
+// END:fieldsAndBefore

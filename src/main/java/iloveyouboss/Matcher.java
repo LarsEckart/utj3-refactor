@@ -1,11 +1,28 @@
 package iloveyouboss;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import static iloveyouboss.Weight.REQUIRED;
 
 public class Matcher {
     private final Criteria criteria;
     private final Map<String, Answer> answers;
+
+    // TODO reference in chapter
+    // START:ctor
+    public Matcher(Criteria criteria, Answer... matcherAnswers) {
+        this.criteria = criteria;
+        this.answers = toMap(matcherAnswers);
+    }
+
+    private Map<String, Answer> toMap(Answer[] answers) {
+        var answersMap = new HashMap<String, Answer>();
+        Arrays.stream(answers).forEach(answer ->
+            answersMap.put(answer.questionText(), answer));
+        return answersMap;
+    }
+    // END:ctor
 
     public Matcher(Criteria criteria, Map<String, Answer> answers) {
         this.criteria = criteria;
