@@ -21,8 +21,10 @@ public class Profile {
         return new Matcher(criteria, answers).matches();
     }
 
+    // START_HIGHLIGHT
     public int score(Criteria criteria) {
         return new Matcher(criteria, answers).score();
+        // END_HIGHLIGHT
     }
     // END:matches
 
