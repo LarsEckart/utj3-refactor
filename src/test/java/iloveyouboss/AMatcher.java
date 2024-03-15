@@ -52,16 +52,15 @@ public class AMatcher {
         // START:test
         @Test
         void whenAnyRequiredCriteriaNotMet() {
+            // START_HIGHLIGHT
+            profile.add(freeLunchNo, bonusYes);
+            // END_HIGHLIGHT
             criteria = new Criteria(
                 new Criterion(freeLunchYes, REQUIRED),
                 new Criterion(bonusYes, IMPORTANT));
-            // START_HIGHLIGHT
-            // use the args you saved here:
-            matcher = new Matcher(criteria, freeLunchNo, bonusYes);
-            // END_HIGHLIGHT
 
             // START_HIGHLIGHT
-            var matches = matcher.matches(); // criteria arg is gone
+            var matches = matcher.matches(criteria);
             // END_HIGHLIGHT
 
             assertFalse(matches);
