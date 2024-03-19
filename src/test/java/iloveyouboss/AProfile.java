@@ -55,7 +55,7 @@ class AProfile {
                     new Criterion(bonusYes, IMPORTANT));
 
             // START_HIGHLIGHT
-            var matches = profile.matches(criteria); // remove criteria arg
+            var matches = profile.matches(criteria);
             // END_HIGHLIGHT
 
             assertFalse(matches);
