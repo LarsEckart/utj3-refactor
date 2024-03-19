@@ -46,9 +46,7 @@ class AProfile {
         // START:score
         @Test
         void whenAnyRequiredCriteriaNotMet() {
-            // START_HIGHLIGHT
             profile.add(freeLunchNo, bonusYes);
-            // END_HIGHLIGHT
             criteria = new Criteria(
                     new Criterion(freeLunchYes, REQUIRED),
                     new Criterion(bonusYes, IMPORTANT));
