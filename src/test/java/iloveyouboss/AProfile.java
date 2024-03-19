@@ -1,6 +1,5 @@
 package iloveyouboss;
 
-// START:test
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -44,7 +43,7 @@ class AProfile {
 
     @Nested
     class DoesNotMatch {
-        // START:test
+        // START:score
         @Test
         void whenAnyRequiredCriteriaNotMet() {
             // START_HIGHLIGHT
@@ -60,7 +59,7 @@ class AProfile {
 
             assertFalse(matches);
         }
-        // END:test
+        // END:score
 
         @Test
         void whenNoneOfMultipleCriteriaMatch() {
