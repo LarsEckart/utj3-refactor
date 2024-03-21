@@ -20,9 +20,9 @@ public class Profile {
 
     // START:matches
     public boolean matches(Criteria criteria) {
-        var matchSet = new Matcher(criteria, answers);
-        score = matchSet.score();
-        return matchSet.matches();
+        var matcher = new Matcher(criteria, answers);
+        score = matcher.score();
+        return matcher.matches();
     }
     // END:matches
 
