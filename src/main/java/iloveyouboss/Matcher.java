@@ -2,42 +2,49 @@ package iloveyouboss;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import static iloveyouboss.Weight.REQUIRED;
-import static java.util.Arrays.asList;
 
 public class Matcher {
     private final Criteria criteria;
     private final Map<String, Answer> answers;
 
-    public Matcher(Criteria criteria, List<Answer> matcherAnswers) {
+    // TODO reference in chapter
+    // START:ctor
+    public Matcher(Criteria criteria, Answer... matcherAnswers) {
         this.criteria = criteria;
         this.answers = toMap(matcherAnswers);
     }
 
-    public Matcher(Criteria criteria, Answer... matcherAnswers) {
-        this.criteria = criteria;
-        this.answers = toMap(asList(matcherAnswers));
-    }
-
-    private Map<String, Answer> toMap(List<Answer> answers) {
+    private Map<String, Answer> toMap(Answer[] answers) {
         var answersMap = new HashMap<String, Answer>();
-        answers.stream().forEach(answer ->
+        Arrays.stream(answers).forEach(answer ->
             answersMap.put(answer.questionText(), answer));
         return answersMap;
     }
+    // END:ctor
 
+    public Matcher(Criteria criteria, Map<String, Answer> answers) {
+        this.criteria = criteria;
+        this.answers = answers;
+    }
+
+    // START:matches
     public boolean matches() {
+        // START_HIGHLIGHT
         return allRequiredCriteriaMet() && anyMatches();
+        // END_HIGHLIGHT
     }
 
     private boolean allRequiredCriteriaMet() {
         return criteria.stream()
+            // START_HIGHLIGHT
             .filter(criterion -> criterion.weight() == REQUIRED)
             .allMatch(criterion ->
                 criterion.isMatch(profileAnswerMatching(criterion)));
+        // END_HIGHLIGHT
     }
+    // END:matches
 
     private boolean anyMatches() {
         return criteria.stream()
@@ -49,6 +56,7 @@ public class Matcher {
         return answers.get(criterion.questionText());
     }
 
+    // START:score
     public int score() {
         return criteria.stream()
             .filter(criterion ->
@@ -56,4 +64,5 @@ public class Matcher {
             .mapToInt(criterion -> criterion.weight().value())
             .sum();
     }
+    // END:score
 }
