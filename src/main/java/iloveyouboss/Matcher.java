@@ -9,7 +9,6 @@ public class Matcher {
     private final Criteria criteria;
     private final Map<String, Answer> answers;
 
-    // TODO reference in chapter
     // START:ctor
     public Matcher(Criteria criteria, Answer... matcherAnswers) {
         this.criteria = criteria;
