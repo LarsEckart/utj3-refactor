@@ -14,14 +14,12 @@ import static iloveyouboss.YesNo.NO;
 import static iloveyouboss.YesNo.YES;
 
 public class AProfilePerformance {
+    int questionCount = 20;
     Profile profile;
-    Answer[] answersArray;
-    int times = 1;
     List<Question> questions = new ArrayList<>();
     List<Answer> answers = new ArrayList<>();
     Criteria criteria;
     Random random = new Random();
-    String[] NO_YES = {NO.toString(), YES.toString()};
 
     @BeforeEach
     void create() {
@@ -30,11 +28,11 @@ public class AProfilePerformance {
     }
 
     private void create20QuestionsAndAnswers() {
-        IntStream.range(0, 20).forEach(i -> {
-            var question = new Question("" + i, NO_YES, i);
+        String[] noYes = {NO.toString(), YES.toString()};
+        IntStream.range(0, questionCount).forEach(i -> {
+            var question = new Question("" + i, noYes, i);
             questions.add(question);
-            var answer = new Answer(question, randomYesNoAnswer());
-            answers.add(answer);
+            answers.add(new Answer(question, randomYesNoAnswer()));
         });
     }
 
@@ -50,13 +48,12 @@ public class AProfilePerformance {
 
     void createCriteria() {
         var items = new ArrayList<Criterion>();
-        IntStream.range(0, times).forEach(i -> {
+        IntStream.range(0, questionCount).forEach(i -> {
             var question = questions.get(i);
             var answer = new Answer(question, randomYesNoAnswer());
             items.add(new Criterion(answer, randomWeight()));
         });
         criteria = new Criteria(items);
-        answersArray = answers.toArray(new Answer[0]);
     }
 
     // START_HIGHLIGHT
@@ -65,7 +62,7 @@ public class AProfilePerformance {
         var numberOfTimes = 1_000_000;
         var elapsedMs = time(numberOfTimes, i -> {
             profile = new Profile("");
-            profile.add(answersArray);
+            profile.add(answers.toArray(new Answer[0]));
             profile.matches(criteria);
         });
         System.out.println(elapsedMs);
