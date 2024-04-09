@@ -188,7 +188,6 @@ class AProfile {
                 items.add(new Criterion(answer, randomWeight()));
             });
             // START:perf_test
-            // ...
             criteria = new Criteria(items);
             // START_HIGHLIGHT
             answersArray = answers.toArray(new Answer[0]);
