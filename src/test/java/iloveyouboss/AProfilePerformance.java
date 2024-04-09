@@ -59,7 +59,7 @@ public class AProfilePerformance {
         answersArray = answers.toArray(new Answer[0]);
     }
 
-    // START:test
+    // START_HIGHLIGHT
     @Test
     void executionTime() {
         var numberOfTimes = 1_000_000;
@@ -70,7 +70,7 @@ public class AProfilePerformance {
         });
         System.out.println(elapsedMs);
     }
-    // END:test
+    // END_HIGHLIGHT
 
     long time(int times, Consumer<Integer> func) {
         var start = System.nanoTime();
