@@ -1,7 +1,6 @@
 package iloveyouboss;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -77,5 +76,4 @@ public class AProfilePerformance {
         IntStream.range(0, times).forEach(i -> func.accept(i + 1));
         return (System.nanoTime() - start) / 1_000_000;
     }
-
 }
