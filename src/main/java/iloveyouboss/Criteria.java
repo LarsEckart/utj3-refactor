@@ -5,15 +5,9 @@ import java.util.*;
 import java.util.stream.Stream;
 import static java.util.Arrays.asList;
 
-public record Criteria(List<Criterion> criteria)
-    implements Iterable<Criterion> {
+public record Criteria(List<Criterion> criteria) {
     public Criteria(Criterion... criterion) {
         this(asList(criterion));
-    }
-
-    @Override
-    public Iterator<Criterion> iterator() {
-        return criteria.iterator();
     }
 
     // START_HIGHLIGHT
