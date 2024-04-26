@@ -20,8 +20,11 @@ public class Profile {
     }
 
     // START:mouthful
+    // START:matches
     public boolean matches(Criteria criteria) {
+        // END:matches
         // ...
+        // START:matches
         // END:mouthful
         score = 0;
 
@@ -32,7 +35,9 @@ public class Profile {
             // START_HIGHLIGHT
             var match = criterion.isMatch(profileAnswerMatching(criterion));
             // END_HIGHLIGHT
+            // END:matches
             // ...
+            // START:matches
             // END:mouthful
             if (!match && criterion.weight() == REQUIRED) {
                 kill = true;
@@ -43,7 +48,9 @@ public class Profile {
             anyMatches |= match;
             // START:mouthful
         }
+        // END:matches
         // ...
+        // START:matches
         // END:mouthful
         if (kill)
             return false;
@@ -51,6 +58,7 @@ public class Profile {
         return anyMatches;
         // START:mouthful
     }
+    // END:matches
     // END: mouthful
 
     private Answer profileAnswerMatching(Criterion criterion) {
