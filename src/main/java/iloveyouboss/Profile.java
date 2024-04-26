@@ -32,10 +32,12 @@ public class Profile {
         var anyMatches = false;
         // START:mouthful
         for (var criterion: criteria) {
-            // START_HIGHLIGHT
-            var match = criterion.isMatch(profileAnswerMatching(criterion));
-            // END_HIGHLIGHT
             // END:matches
+            // START_HIGHLIGHT
+            // START:matches
+            var match = criterion.isMatch(profileAnswerMatching(criterion));
+            // END:matches
+            // END_HIGHLIGHT
             // ...
             // START:matches
             // END:mouthful
