@@ -28,7 +28,9 @@ public class Profile {
         // START:matches
         for (var criterion: criteria) {
             var answer = answers.get(criterion.answer().questionText());
+            // START_HIGHLIGHT
             var match = isMatch(criterion, answer);
+            // END_HIGHLIGHT
             // ...
             // END:matches
             if (!match && criterion.weight() == REQUIRED) {
