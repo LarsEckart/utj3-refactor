@@ -34,6 +34,7 @@ public class Profile {
 
     // START_HIGHLIGHT
     private boolean anyRequiredCriteriaNotMet(Criteria criteria) {
+        // END_HIGHLIGHT
         var kill = false;
         for (var criterion: criteria) {
             var match = criterion.isMatch(profileAnswerMatching(criterion));
@@ -43,7 +44,6 @@ public class Profile {
         }
         return kill;
     }
-    // END_HIGHLIGHT
     // END:required
 
     private void calculateScore(Criteria criteria) {
