@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
-import java.util.stream.IntStream;
 
 import static iloveyouboss.YesNo.NO;
 import static iloveyouboss.YesNo.YES;
@@ -24,13 +23,13 @@ class AProfilePerformance {
 
     @BeforeEach
     void create() {
-        create20QuestionsAndAnswers();
+        createSomeQuestionsAndAnswers(questionCount);
         createCriteria();
     }
 
-    void create20QuestionsAndAnswers() {
+    void createSomeQuestionsAndAnswers(int number) {
         String[] noYes = {NO.toString(), YES.toString()};
-        range(0, questionCount).forEach(i -> {
+        range(0, number).forEach(i -> {
             var question = new Question("" + i, noYes, i);
             questions.add(question);
             answers.add(new Answer(question, randomYesNoAnswer()));
@@ -48,20 +47,19 @@ class AProfilePerformance {
     }
 
     void createCriteria() {
-        var items = new ArrayList<Criterion>();
-        range(0, questionCount).forEach(i -> {
+        var items = range(0, questionCount).mapToObj(i -> {
             var question = questions.get(i);
             var answer = new Answer(question, randomYesNoAnswer());
-            items.add(new Criterion(answer, randomWeight()));
-        });
+            return new Criterion(answer, randomWeight());
+        }).toList();
         criteria = new Criteria(items);
     }
 
     // START_HIGHLIGHT
     @Test
     void executionTime() {
-        var numberOfTimes = 1_000_000;
-        var elapsedMs = time(numberOfTimes, i -> {
+        var iterations = 1_000_000;
+        var elapsedMs = time(iterations, i -> {
             profile = new Profile("");
             profile.add(answers.toArray(new Answer[0]));
             profile.matches(criteria);
