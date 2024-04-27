@@ -40,6 +40,7 @@ public class Profile {
 
     // START_HIGHLIGHT
     private void calculateScore(Criteria criteria) {
+        // END_HIGHLIGHT
         score = 0;
         for (var criterion: criteria) {
             var match = criterion.isMatch(profileAnswerMatching(criterion));
@@ -48,7 +49,6 @@ public class Profile {
             }
         }
     }
-    // END_HIGHLIGHT
     // END:calculateScore
 
     private boolean anyMatches(Criteria criteria) {
