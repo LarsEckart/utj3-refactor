@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 import static iloveyouboss.YesNo.NO;
@@ -18,17 +19,19 @@ class AProfilePerformance {
     @Test
     void executionTime() {
         var questions = createQuestions();
-        var answers = createAnswers(questions);
         var criteria = new Criteria(createCriteria(questions));
 
         // START_HIGHLIGHT
         var iterations = 1_000_000;
+        var matchCount = new AtomicInteger(0);
         var elapsedMs = time(iterations, i -> {
             var profile = new Profile("");
-            profile.add(answers);
-            profile.matches(criteria);
+            profile.add(createAnswers(questions));
+            if (profile.matches(criteria))
+                matchCount.incrementAndGet();
         });
-        System.out.println(elapsedMs);
+        System.out.println("elapsed: " + elapsedMs);
+        System.out.println("matches: " + matchCount.get());
         // END_HIGHLIGHT
     }
 
@@ -41,16 +44,24 @@ class AProfilePerformance {
     int numberOfWeights = Weight.values().length;
 
     Weight randomWeight() {
-        return Weight.values()[random.nextInt(numberOfWeights)];
+        if (isOneInTenTimesRandomly()) return Weight.REQUIRED;
+
+        var nonRequiredWeightIndex =
+            random.nextInt(numberOfWeights - 1) + 1;
+        return Weight.values()[nonRequiredWeightIndex];
     }
 
-    YesNo randomYesNoAnswer() {
+    private boolean isOneInTenTimesRandomly() {
+        return random.nextInt(10) == 0;
+    }
+
+    YesNo randomAnswer() {
         return random.nextInt() % 2 == 0 ? NO : YES;
     }
 
     Answer[] createAnswers(List<Question> questions) {
         return range(0, questionCount)
-            .mapToObj(i -> new Answer(questions.get(i), randomYesNoAnswer()))
+            .mapToObj(i -> new Answer(questions.get(i), randomAnswer()))
             .toArray(Answer[]::new);
     }
 
@@ -63,8 +74,8 @@ class AProfilePerformance {
 
     List<Criterion> createCriteria(List<Question> questions) {
         return range(0, questionCount)
-            .mapToObj(i -> new Criterion(
-                new Answer(questions.get(i), randomYesNoAnswer()), randomWeight()))
+            .mapToObj(i -> new Criterion(new Answer(
+                questions.get(i), randomAnswer()), randomWeight()))
             .toList();
     }
 }
