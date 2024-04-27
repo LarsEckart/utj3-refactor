@@ -45,6 +45,7 @@ public class Profile {
 
     // START_HIGHLIGHT
     private boolean anyMatches(Criteria criteria) {
+        // END_HIGHLIGHT
         var anyMatches = false;
         for (var criterion: criteria) {
             var match = criterion.isMatch(profileAnswerMatching(criterion));
@@ -52,7 +53,6 @@ public class Profile {
         }
         return anyMatches;
     }
-    // END_HIGHLIGHT
     // END:anyMatches
 
     private Answer profileAnswerMatching(Criterion criterion) {
