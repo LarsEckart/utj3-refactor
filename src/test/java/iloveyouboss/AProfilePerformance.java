@@ -17,11 +17,12 @@ class AProfilePerformance {
     Random random = new Random();
 
     @Test
+        // START_HIGHLIGHT
     void executionTime() {
+        // END_HIGHLIGHT
         var questions = createQuestions();
         var criteria = new Criteria(createCriteria(questions));
 
-        // START_HIGHLIGHT
         var iterations = 1_000_000;
         var matchCount = new AtomicInteger(0);
         var elapsedMs = time(iterations, i -> {
@@ -32,7 +33,6 @@ class AProfilePerformance {
         });
         System.out.println("elapsed: " + elapsedMs);
         System.out.println("matches: " + matchCount.get());
-        // END_HIGHLIGHT
     }
 
     long time(int times, Consumer<Integer> func) {
