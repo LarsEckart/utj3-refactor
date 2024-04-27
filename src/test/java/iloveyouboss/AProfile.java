@@ -5,14 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.function.Consumer;
-import java.util.stream.IntStream;
-
 import static iloveyouboss.Weight.*;
-import static iloveyouboss.YesNo.*;
+import static iloveyouboss.YesNo.NO;
+import static iloveyouboss.YesNo.YES;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AProfile {

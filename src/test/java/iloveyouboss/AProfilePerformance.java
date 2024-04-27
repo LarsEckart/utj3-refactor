@@ -12,8 +12,9 @@ import java.util.stream.IntStream;
 
 import static iloveyouboss.YesNo.NO;
 import static iloveyouboss.YesNo.YES;
+import static java.util.stream.IntStream.range;
 
-public class AProfilePerformance {
+class AProfilePerformance {
     int questionCount = 20;
     Profile profile;
     List<Question> questions = new ArrayList<>();
@@ -27,9 +28,9 @@ public class AProfilePerformance {
         createCriteria();
     }
 
-    private void create20QuestionsAndAnswers() {
+    void create20QuestionsAndAnswers() {
         String[] noYes = {NO.toString(), YES.toString()};
-        IntStream.range(0, questionCount).forEach(i -> {
+        range(0, questionCount).forEach(i -> {
             var question = new Question("" + i, noYes, i);
             questions.add(question);
             answers.add(new Answer(question, randomYesNoAnswer()));
@@ -38,17 +39,17 @@ public class AProfilePerformance {
 
     int numberOfWeights = Weight.values().length;
 
-    private Weight randomWeight() {
+    Weight randomWeight() {
         return Weight.values()[random.nextInt(numberOfWeights)];
     }
 
-    private YesNo randomYesNoAnswer() {
+    YesNo randomYesNoAnswer() {
         return random.nextInt() % 2 == 0 ? NO : YES;
     }
 
     void createCriteria() {
         var items = new ArrayList<Criterion>();
-        IntStream.range(0, questionCount).forEach(i -> {
+        range(0, questionCount).forEach(i -> {
             var question = questions.get(i);
             var answer = new Answer(question, randomYesNoAnswer());
             items.add(new Criterion(answer, randomWeight()));
@@ -71,7 +72,7 @@ public class AProfilePerformance {
 
     long time(int times, Consumer<Integer> func) {
         var start = System.nanoTime();
-        IntStream.range(0, times).forEach(i -> func.accept(i + 1));
+        range(0, times).forEach(i -> func.accept(i + 1));
         return (System.nanoTime() - start) / 1_000_000;
     }
 }
