@@ -11,9 +11,11 @@ public record Criteria(List<Criterion> criteria) {
     }
 
     // START_HIGHLIGHT
+    // START:stream
     public Stream<Criterion> stream() {
         return criteria.stream();
     }
+    // END:stream
     // END_HIGHLIGHT
 }
 // END:Criteria
