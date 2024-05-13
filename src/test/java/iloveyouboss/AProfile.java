@@ -46,9 +46,7 @@ class AProfile {
         // START:score
         @Test
         void whenAnyRequiredCriteriaNotMet() {
-            // START:answers
             profile.add(freeLunchNo, bonusYes);
-            // END:answers
             criteria = new Criteria(
                     new Criterion(freeLunchYes, REQUIRED),
                     new Criterion(bonusYes, IMPORTANT));
@@ -61,9 +59,12 @@ class AProfile {
         }
         // END:score
 
+        // START:answers
         @Test
         void whenNoneOfMultipleCriteriaMatch() {
+            // START_HIGHLIGHT
             profile.add(bonusNo, freeLunchNo);
+            // END_HIGHLIGHT
             criteria = new Criteria(
                 new Criterion(bonusYes, IMPORTANT),
                 new Criterion(freeLunchYes, IMPORTANT));
@@ -72,6 +73,7 @@ class AProfile {
 
             assertFalse(matches);
         }
+        // END:answers
     }
 
     @Nested
