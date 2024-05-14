@@ -56,8 +56,10 @@ public class Profile {
         // ...
         // END:loop
         // START:profile
-        if (kill)
+        if (kill) {
+            score = 0;
             return false;
+        }
         return anyMatches;
         // START:loop
     }
