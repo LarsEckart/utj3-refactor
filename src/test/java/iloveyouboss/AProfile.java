@@ -109,6 +109,17 @@ class AProfile {
         }
 
         @Test
+        void isZeroWhenRequiredCriteriaNotMet() {
+            profile.add(bonusNo);
+            criteria = new Criteria(
+                new Criterion(bonusYes, REQUIRED));
+
+            profile.matches(criteria);
+
+            assertEquals(0, profile.score());
+        }
+
+        @Test
         void equalsCriterionValueForSingleMatch() {
             profile.add(bonusYes);
             criteria = new Criteria(
