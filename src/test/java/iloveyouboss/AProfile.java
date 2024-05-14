@@ -110,6 +110,18 @@ class AProfile {
         }
 
         @Test
+        void isZeroWhenRequiredCriteriaNotMet() {
+            profile.add(bonusNo, freeLunchYes);
+            criteria = new Criteria(
+                new Criterion(bonusYes, REQUIRED),
+                new Criterion(freeLunchYes, IMPORTANT));
+
+            profile.matches(criteria);
+
+            assertEquals(0, profile.score());
+        }
+
+        @Test
         void equalsCriterionValueForSingleMatch() {
             profile.add(bonusYes);
             criteria = new Criteria(
