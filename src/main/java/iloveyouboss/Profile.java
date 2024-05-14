@@ -1,8 +1,8 @@
 package iloveyouboss;
 
+// START:impl
 import java.util.HashMap;
 import java.util.Map;
-
 import static iloveyouboss.Weight.REQUIRED;
 
 public class Profile {
@@ -10,9 +10,7 @@ public class Profile {
     private final String name;
     private int score;
 
-    public Profile(String name) {
-        this.name = name;
-    }
+    public Profile(String name) { this.name = name; }
 
     public void add(Answer... newAnswers) {
         for (var answer: newAnswers)
@@ -61,12 +59,9 @@ public class Profile {
         return answers.get(criterion.questionText());
     }
 
-    public int score() {
-        return score;
-    }
+    public int score() { return score; }
 
     @Override
-    public String toString() {
-        return name;
-    }
+    public String toString() { return name; }
 }
+// END:impl
