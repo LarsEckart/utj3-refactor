@@ -28,8 +28,10 @@ public class Profile {
                 kill = true;
             }
         }
-        if (kill)
+        if (kill) {
+            score = 0;
             return false;
+        }
 
         // START_HIGHLIGHT
         calculateScore(criteria);
