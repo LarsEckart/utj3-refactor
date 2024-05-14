@@ -32,9 +32,8 @@ public class Profile {
                 kill = true;
             }
         }
-        if (kill) {
+        if (kill)
             return false;
-        }
 
         return anyMatches(criteria);
     }
