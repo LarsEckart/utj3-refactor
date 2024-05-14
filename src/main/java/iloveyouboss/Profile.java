@@ -21,10 +21,10 @@ public class Profile {
 
     // START:matches
     public boolean matches(Criteria criteria) {
+        calculateScore(criteria);
+
         if (anyRequiredCriteriaNotMet(criteria))
             return false;
-
-        calculateScore(criteria);
 
         return anyMatches(criteria);
     }
