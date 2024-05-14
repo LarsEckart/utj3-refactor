@@ -94,9 +94,9 @@ class AProfile {
         }
     }
 
-    // START:score
     @Nested
     class Score {
+        // START:score
         @Test
         void isZeroWhenThereAreNoMatches() {
             profile.add(bonusNo);
@@ -111,6 +111,7 @@ class AProfile {
             assertEquals(0, score);
             // END_HIGHLIGHT
         }
+        // END:score
 
         @Test
         void doesNotIncludeUnmetRequiredCriteria() {
@@ -157,5 +158,4 @@ class AProfile {
             // END_HIGHLIGHT
         }
     }
-    // END:score
 }
