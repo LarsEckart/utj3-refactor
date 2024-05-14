@@ -1,20 +1,15 @@
 package iloveyouboss;
 
 // START:profile
-import java.util.HashMap;
-import java.util.Map;
-
-import static iloveyouboss.Weight.IRRELEVANT;
-import static iloveyouboss.Weight.REQUIRED;
+import java.util.*;
+import static iloveyouboss.Weight.*;
 
 public class Profile {
     private final Map<String,Answer> answers = new HashMap<>();
     private final String name;
     private int score;
 
-    public Profile(String name) {
-        this.name = name;
-    }
+    public Profile(String name) { this.name = name; }
 
     public void add(Answer... newAnswers) {
         for (var answer: newAnswers)
@@ -64,13 +59,9 @@ public class Profile {
     }
     // END:loop
 
-    public int score() {
-        return score;
-    }
+    public int score() { return score; }
 
     @Override
-    public String toString() {
-        return name;
-    }
+    public String toString() { return name; }
 }
 // END:profile

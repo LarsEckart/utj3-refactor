@@ -1,10 +1,7 @@
 package iloveyouboss;
 
 // START:test
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.api.*;
 import static iloveyouboss.Weight.*;
 import static iloveyouboss.YesNo.*;
 import static org.junit.jupiter.api.Assertions.*;
