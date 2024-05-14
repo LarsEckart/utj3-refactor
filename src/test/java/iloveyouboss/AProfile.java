@@ -62,6 +62,7 @@ class AProfile {
         }
         // END:test
 
+        // START:answers
         @Test
         void whenNoneOfMultipleCriteriaMatch() {
             // START_HIGHLIGHT
@@ -75,6 +76,7 @@ class AProfile {
 
             assertFalse(matches);
         }
+        // END:answers
     }
 
     @Nested
