@@ -21,6 +21,10 @@ public class Profile {
 
     // START:calculateScore
     public boolean matches(Criteria criteria) {
+        // START_HIGHLIGHT
+        calculateScore(criteria);
+        // END_HIGHLIGHT
+
         var kill = false;
         for (var criterion: criteria) {
             var match = criterion.isMatch(profileAnswerMatching(criterion));
@@ -31,10 +35,6 @@ public class Profile {
         if (kill) {
             return false;
         }
-
-        // START_HIGHLIGHT
-        calculateScore(criteria);
-        // END_HIGHLIGHT
 
         return anyMatches(criteria);
     }
