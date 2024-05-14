@@ -109,6 +109,18 @@ class AProfile {
         }
 
         @Test
+        void doesNotIncludeUnmetRequiredCriteria() {
+            profile.add(bonusNo, freeLunchYes);
+            criteria = new Criteria(
+                new Criterion(bonusYes, REQUIRED),
+                new Criterion(freeLunchYes, IMPORTANT));
+
+            profile.matches(criteria);
+
+            assertEquals(IMPORTANT.value(), profile.score());
+        }
+
+        @Test
         void equalsCriterionValueForSingleMatch() {
             profile.add(bonusYes);
             criteria = new Criteria(
