@@ -21,13 +21,14 @@ public class Profile {
 
     // START:matches
     public boolean matches(Criteria criteria) {
-        // START_HIGHLIGHT
         score = new Matcher(criteria, answers).score();
-        // END_HIGHLIGHT
 
+        // START_HIGHLIGHT
         if (anyRequiredCriteriaNotMet(criteria))
             return false;
+
         return anyMatches(criteria);
+        // END_HIGHLIGHT
     }
     // END:matches
 
