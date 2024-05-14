@@ -64,7 +64,9 @@ class AProfile {
 
         @Test
         void whenNoneOfMultipleCriteriaMatch() {
+            // START_HIGHLIGHT
             profile.add(bonusNo, freeLunchNo);
+            // END_HIGHLIGHT
             criteria = new Criteria(
                 new Criterion(bonusYes, IMPORTANT),
                 new Criterion(freeLunchYes, IMPORTANT));
