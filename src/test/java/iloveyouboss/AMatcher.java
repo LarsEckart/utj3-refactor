@@ -46,14 +46,26 @@ public class AMatcher {
 
     @Nested
     class DoesNotMatch {
-        // START:test
         @Test
         void whenAnyRequiredCriteriaNotMet() {
             criteria = new Criteria(
                 new Criterion(freeLunchYes, REQUIRED),
                 new Criterion(bonusYes, IMPORTANT));
-            // START_HIGHLIGHT
             matcher = new Matcher(criteria, freeLunchNo, bonusYes);
+
+            var matches = matcher.matches();
+
+            assertFalse(matches);
+        }
+
+        // START:test
+        @Test
+        void whenNoneOfMultipleCriteriaMatch() {
+            criteria = new Criteria(
+                new Criterion(bonusYes, IMPORTANT),
+                new Criterion(freeLunchYes, IMPORTANT));
+            // START_HIGHLIGHT
+            matcher = new Matcher(criteria, bonusNo, freeLunchNo);
             // END_HIGHLIGHT
 
             // START_HIGHLIGHT
@@ -63,18 +75,6 @@ public class AMatcher {
             assertFalse(matches);
         }
         // END:test
-
-        @Test
-        void whenNoneOfMultipleCriteriaMatch() {
-            criteria = new Criteria(
-                new Criterion(bonusYes, IMPORTANT),
-                new Criterion(freeLunchYes, IMPORTANT));
-            matcher = new Matcher(criteria, bonusNo, freeLunchNo);
-
-            var matches = matcher.matches();
-
-            assertFalse(matches);
-        }
     }
 
     @Nested
