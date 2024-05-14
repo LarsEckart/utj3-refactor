@@ -23,10 +23,14 @@ public class Profile {
     public boolean matches(Criteria criteria) {
         score = new Matcher(criteria, answers).score();
 
+        // START_HIGHLIGHT
         return isMatchFor(criteria);
+        // END_HIGHLIGHT
     }
 
+    // START_HIGHLIGHT
     private boolean isMatchFor(Criteria criteria) {
+        // END_HIGHLIGHT
         if (anyRequiredCriteriaNotMet(criteria))
             return false;
         return anyMatches(criteria);
