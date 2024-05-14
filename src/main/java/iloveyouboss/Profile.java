@@ -39,8 +39,10 @@ public class Profile {
             anyMatches |= match;
             // END_HIGHLIGHT
         }
-        if (kill)
+        if (kill) {
+            score = 0;
             return false;
+        }
 
         // START_HIGHLIGHT
         return anyMatches;
