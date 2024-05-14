@@ -35,10 +35,8 @@ public class Profile {
             }
             anyMatches |= match;
         }
-        if (kill) {
-            score = 0;
+        if (kill)
             return false;
-        }
 
         // START_HIGHLIGHT
         return anyMatches(criteria);
