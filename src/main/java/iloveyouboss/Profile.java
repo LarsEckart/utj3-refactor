@@ -25,7 +25,6 @@ public class Profile {
         var kill = anyRequiredCriteriaNotMet(criteria);
         // END_HIGHLIGHT
         if (kill) {
-            score = 0;
             return false;
         }
 
