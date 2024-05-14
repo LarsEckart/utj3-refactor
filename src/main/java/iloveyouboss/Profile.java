@@ -33,8 +33,10 @@ public class Profile {
                 score += criterion.weight().value();
             }
         }
-        if (kill)
+        if (kill) {
+            score = 0;
             return false;
+        }
 
         return anyMatches(criteria);
     }
