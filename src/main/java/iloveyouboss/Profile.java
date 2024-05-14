@@ -35,8 +35,10 @@ public class Profile {
             }
             anyMatches |= match;
         }
-        if (kill)
+        if (kill) {
+            score = 0;
             return false;
+        }
 
         // START_HIGHLIGHT
         return anyMatches(criteria);
