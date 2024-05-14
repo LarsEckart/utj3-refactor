@@ -43,8 +43,10 @@ public class Profile {
             // START:matches
         }
         // END:matches
-        if (kill)
+        if (kill) {
+            score = 0;
             return false;
+        }
         return anyMatches;
     }
 
