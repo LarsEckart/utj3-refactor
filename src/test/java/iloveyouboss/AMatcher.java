@@ -117,6 +117,18 @@ public class AMatcher {
         }
 
         @Test
+        void doesNotIncludeUnmetRequiredCriteria() {
+            criteria = new Criteria(
+               new Criterion(bonusYes, REQUIRED),
+               new Criterion(freeLunchYes, IMPORTANT));
+            matcher = new Matcher(criteria, bonusNo, freeLunchYes);
+
+            var score = matcher.score();
+
+            assertEquals(IMPORTANT.value(), score);
+        }
+
+        @Test
         void equalsCriterionValueForSingleMatch() {
             criteria = new Criteria(
                 new Criterion(bonusYes, IMPORTANT));
