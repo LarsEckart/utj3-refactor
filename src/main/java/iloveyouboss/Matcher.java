@@ -1,13 +1,12 @@
 package iloveyouboss;
 
-// START:class
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import static iloveyouboss.Weight.REQUIRED;
 import static java.util.Arrays.asList;
 
+// START:class
 public record Matcher(Criteria criteria, Map<String, Answer> answers) {
     public Matcher(Criteria criteria, List<Answer> matcherAnswers) {
         this(criteria, toMap(matcherAnswers));
@@ -23,8 +22,6 @@ public record Matcher(Criteria criteria, Map<String, Answer> answers) {
             answersMap.put(answer.questionText(), answer));
         return answersMap;
     }
-    // ...
-    // END:class
 
     public boolean matches() {
         return allRequiredCriteriaMet() && anyMatches();
@@ -54,6 +51,5 @@ public record Matcher(Criteria criteria, Map<String, Answer> answers) {
             .mapToInt(criterion -> criterion.weight().value())
             .sum();
     }
-    // START:class
 }
 // END:class
