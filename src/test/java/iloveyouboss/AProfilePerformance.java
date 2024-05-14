@@ -2,14 +2,11 @@ package iloveyouboss;
 
 // START:perf_test
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
-
-import static iloveyouboss.YesNo.NO;
-import static iloveyouboss.YesNo.YES;
+import static iloveyouboss.YesNo.*;
 import static java.util.stream.IntStream.range;
 
 class AProfilePerformance {
