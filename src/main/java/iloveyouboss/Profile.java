@@ -24,8 +24,10 @@ public class Profile {
         // START_HIGHLIGHT
         var kill = anyRequiredCriteriaNotMet(criteria);
         // END_HIGHLIGHT
-        if (kill)
+        if (kill) {
+            score = 0;
             return false;
+        }
 
         calculateScore(criteria);
 
