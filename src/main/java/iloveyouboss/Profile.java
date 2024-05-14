@@ -21,14 +21,14 @@ public class Profile {
 
     // START:required
     public boolean matches(Criteria criteria) {
+        calculateScore(criteria);
+
         // START_HIGHLIGHT
         var kill = anyRequiredCriteriaNotMet(criteria);
         // END_HIGHLIGHT
         if (kill) {
             return false;
         }
-
-        calculateScore(criteria);
 
         return anyMatches(criteria);
     }
