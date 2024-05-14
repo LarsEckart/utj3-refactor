@@ -29,7 +29,6 @@ public class Profile {
             }
         }
         if (kill) {
-            score = 0;
             return false;
         }
 
