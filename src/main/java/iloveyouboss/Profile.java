@@ -41,8 +41,10 @@ public class Profile {
             anyMatches |= match;
         }
         // END:loop
-        if (kill)
+        if (kill) {
+            score = 0;
             return false;
+        }
         return anyMatches;
     }
 
