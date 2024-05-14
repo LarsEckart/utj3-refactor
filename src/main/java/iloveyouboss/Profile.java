@@ -46,10 +46,8 @@ public class Profile {
         }
         // ...
         // END:mouthful
-        if (kill) {
-            score = 0;
+        if (kill)
             return false;
-        }
 
         return anyMatches;
         // START:mouthful
